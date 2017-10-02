@@ -1,12 +1,10 @@
 package com.example.myfirstapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class homepage extends AppCompatActivity {
@@ -25,8 +23,11 @@ public class homepage extends AppCompatActivity {
                 case R.id.navigation_dashboard:
                     mTextMessage.setText(R.string.title_dashboard);
                     return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                case R.id.navigation_organization:
+                    mTextMessage.setText(R.string.title_organization);
+                    return true;
+                case R.id.navigation_profile:
+                    mTextMessage.setText(R.string.title_profiles);
                     return true;
             }
             return false;
@@ -43,14 +44,6 @@ public class homepage extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-        TextView textView = new TextView(this);
-        String welcome = "Welcome " + message + "!";
-        textView.setTextSize(40);
-        textView.setText(welcome);
-        ViewGroup layout = (ViewGroup) findViewById(R.id.container);
-        layout.addView(textView);
     }
 
 }
