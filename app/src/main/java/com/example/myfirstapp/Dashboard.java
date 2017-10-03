@@ -36,8 +36,6 @@ public class Dashboard extends Fragment {
         return fragment;
     }
 
-    public class TabActivity extends AppCompatActivity {
-
         /**
          * The {@link android.support.v4.view.PagerAdapter} that will provide
          * fragments for each of the sections. We use a
@@ -54,24 +52,21 @@ public class Dashboard extends Fragment {
         private ViewPager mViewPager;
 
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.fragment_dashboard);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        View rootView = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mSectionsPagerAdapter = new Dashboard_ViewPagerAdapter(getActivity().getSupportFragmentManager());
 
-            // Create the adapter that will return a fragment for each of the three
-            // primary sections of the activity.
-            mSectionsPagerAdapter = new Dashboard_ViewPagerAdapter(getSupportFragmentManager());
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) rootView.findViewById(R.id.dashboard_viewpager);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
 
-            // Set up the ViewPager with the sections adapter.
-            mViewPager = (ViewPager) findViewById(R.id.container);
-            mViewPager.setAdapter(mSectionsPagerAdapter);
-
-            TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-            tabLayout.setupWithViewPager(mViewPager);
-        }
-
-
-
+        TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
+        return rootView;
     }
 }

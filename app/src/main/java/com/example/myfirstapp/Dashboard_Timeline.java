@@ -24,6 +24,7 @@ import java.util.HashMap;
  * Use the {@link Dashboard_Timeline#newInstance} factory method to
  * create an instance of this fragment.
  */
+
 public class Dashboard_Timeline extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -48,9 +49,9 @@ public class Dashboard_Timeline extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup main_content,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_dashboard_timeline, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_dashboard_timeline, main_content, false);
         TextView textView = (TextView) rootView.findViewById(R.id.section_label);
         textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
         initData();
