@@ -1,12 +1,10 @@
 package com.example.myfirstapp;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
-
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -20,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     /** Called when the user clicks the Send button */
     public void sendMessage(View view) {
         // Do something in response to button
-        Intent intent = new Intent(this, TabActivity.class);
+        Intent intent = new Intent(this, homepage.class);
 //        Intent intent = new Intent(this, homepage.class);
         EditText editText = (EditText) findViewById(R.id.username);
         String message = editText.getText().toString();
