@@ -19,7 +19,11 @@
         <activity android:name=".DisplayMessageActivity" />
         <activity
             android:name=".homepage"
-            android:label="@string/title_activity_homepage"></activity>
+            android:label="@string/title_activity_homepage" />
+        <activity
+            android:name=".TabActivity"
+            android:label="@string/title_activity_tab"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
