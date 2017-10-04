@@ -64,5 +64,6 @@ public class MyAdapter extends RecyclerView.Adapter {
         public int getItemCount() {
             return listItem.size();
         }
+
 }
 

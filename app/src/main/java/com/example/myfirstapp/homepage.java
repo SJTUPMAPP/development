@@ -57,7 +57,7 @@ public class homepage extends AppCompatActivity {
         adapter.addFragment(Dashboard.newInstance("AAAA"));
         adapter.addFragment(Page2.newInstance("BBBB"));
         adapter.addFragment(Dashboard.newInstance("CCCC"));
-        adapter.addFragment(Dashboard.newInstance("DDDD"));
+        adapter.addFragment(Page4.newInstance("DDDD"));
         viewPager.setAdapter(adapter);
     }
 

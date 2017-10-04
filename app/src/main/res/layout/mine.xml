@@ -13,40 +13,32 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView"
-        android:layout_marginTop="81dp"
-        android:text="我的文件"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
 
     <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button2"
-        android:text="注销"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
-
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
+        android:id="@+id/my_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="?android:attr/windowBackground"
-        app:menu="@menu/navigation" />
+        android:layout_below="@+id/imageView"
+        android:layout_marginTop="100dp"
+        android:text="我的资料" />
 
     <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
+        android:id="@+id/my_file"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button3"
-        android:text="Button"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/my_data"
+        android:layout_marginTop="30dp"
+        android:text="我的文件" />
+
+    <Button
+        android:id="@+id/log_out"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/my_file"
+        android:layout_marginTop="30dp"
+        android:text="注销" />
+
 </RelativeLayout>
