@@ -55,7 +55,7 @@ public class homepage extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(Dashboard.newInstance("AAAA"));
-        adapter.addFragment(Page2.newInstance("BBBB"));
+        adapter.addFragment(Project.newInstance("BBBB"));
         adapter.addFragment(Dashboard.newInstance("CCCC"));
         adapter.addFragment(Page4.newInstance("DDDD"));
         viewPager.setAdapter(adapter);
