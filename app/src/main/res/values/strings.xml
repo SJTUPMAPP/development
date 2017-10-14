@@ -21,4 +21,6 @@
     <string name="spinner_start_date">Start Date</string>
     <string name="spinner_end_date">End Date</string>
     <string name="text_owner">Owner</string>
+    <string name="text_prevtask">Previous Task</string>
+    <string name="nexttask">Next Task</string>
 </resources>

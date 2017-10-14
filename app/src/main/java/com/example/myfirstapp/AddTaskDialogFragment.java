@@ -12,10 +12,15 @@ import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.View;
 import android.view.LayoutInflater;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.myfirstapp.R.id.project_name;
 
@@ -25,8 +30,20 @@ import static com.example.myfirstapp.R.id.project_name;
 public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment {
     addTaskDialogListener mListener;
 //    EditText project_name = findView
-    Button btnDatePicker;
+    Button startDatePicker;
+    Button endDatePicker;
+
     private int mYear, mMonth, mDay;
+
+    private Spinner spinner_owner;
+    private List<String> owner_data_list;
+    private Spinner spinner_prevtask;
+    private List<String> prevtask_data_list;
+    private Spinner spinner_nexttask;
+    private List<String> nexttask_data_list;
+    private ArrayAdapter<String> owner_arr_adapter;
+    private ArrayAdapter<String> prevtask_arr_adapter;
+    private ArrayAdapter<String> nexttask_arr_adapter;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -50,18 +67,62 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
             }
         });
 
-        btnDatePicker=(Button) view.findViewById(R.id.btn_date);
-
-        btnDatePicker.setOnClickListener(new View.OnClickListener() {
+//        Date picker settings
+        startDatePicker=(Button) view.findViewById(R.id.btn_start_date);
+        startDatePicker.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                showDatePicker();
+                showDatePicker(v);
             }
         });
 
+        endDatePicker=(Button) view.findViewById(R.id.btn_end_date);
+        endDatePicker.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                showDatePicker(v);
+            }
+        });
+
+//        owner spinner settings
+        spinner_owner = (Spinner) view.findViewById(R.id.spinner_owner);
+        spinner_prevtask = (Spinner) view.findViewById(R.id.spinner_prevtask);
+        spinner_nexttask = (Spinner) view.findViewById(R.id.spinner_nexttask);
+
+        //数据
+        owner_data_list = new ArrayList<String>();
+        owner_data_list.add("Elvis");
+        owner_data_list.add("Timmy");
+        owner_data_list.add("Marx");
+        owner_data_list.add("Jason");
+
+        prevtask_data_list = new ArrayList<String>();
+        prevtask_data_list.add("Shopping");
+        prevtask_data_list.add("Studying");
+        prevtask_data_list.add("Movies");
+        prevtask_data_list.add("Sleeping");
+
+        nexttask_data_list = new ArrayList<String>();
+        nexttask_data_list.add("Shopping");
+        nexttask_data_list.add("Studying");
+        nexttask_data_list.add("Movies");
+        nexttask_data_list.add("Sleeping");
+
+        //适配器
+        owner_arr_adapter= new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, owner_data_list);
+        prevtask_arr_adapter= new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, prevtask_data_list);
+        nexttask_arr_adapter= new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, nexttask_data_list);
+        //设置样式
+        owner_arr_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        prevtask_arr_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        nexttask_arr_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //加载适配器
+        spinner_owner.setAdapter(owner_arr_adapter);
+        spinner_prevtask.setAdapter(prevtask_arr_adapter);
+        spinner_nexttask.setAdapter(nexttask_arr_adapter);
         return builder.create();
+
     }
 
-    public void showDatePicker() {
+    public void showDatePicker(final View v) {
             // Get Current Date
             // works in a minimum api of 24
             final Calendar c = Calendar.getInstance();
@@ -74,8 +135,13 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
                         @Override
                         public void onDateSet(DatePicker view, int year,
                                               int monthOfYear, int dayOfMonth) {
+                            if (v.getId() == R.id.btn_start_date) {
+                                startDatePicker.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                            }
+                            else {
+                                endDatePicker.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                            }
 
-                            btnDatePicker.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
 
                         }
                     }, mYear, mMonth, mDay);
@@ -83,7 +149,6 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
     }
 
     public interface addTaskDialogListener {
-//        void onDialogPositiveClick(AddTaskDialogFragment dialog);
         void onDialogPositiveClick(String name);
         void onDialogNegativeClick(AddTaskDialogFragment dialog);
     }

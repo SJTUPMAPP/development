@@ -13,9 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import static android.support.constraint.ConstraintLayout.LayoutParams.BOTTOM;
 
@@ -63,9 +60,7 @@ public class Project extends Fragment implements AddTaskDialogFragment.addTaskDi
 
         int width = constraintLayout.getWidth();
         int height = constraintLayout.getHeight();
-
 //        ConstraintLayout.LayoutParams lp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-
         ConstraintSet set = new ConstraintSet();
         // You may want (optional) to start with the existing constraint,
         // so uncomment this.
@@ -77,10 +72,6 @@ public class Project extends Fragment implements AddTaskDialogFragment.addTaskDi
         set.connect(mId, BOTTOM, R.id.fragment_project_layout, BOTTOM, height/2);
         // Apply the changes
         set.applyTo(constraintLayout);
-        // this is my… (ConstraintLayout) findViewById(R.id.rootLayout);
-//        constraintLayout.removeAllViews();
-//        FloatingActionButton item = new FloatingActionButton(getContext());
-//        Log.d("Name : ", name);
     }
 
     @Override
