@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import static com.example.myfirstapp.R.id.project_name;
 
@@ -45,6 +46,7 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
     private ArrayAdapter<String> prevtask_arr_adapter;
     private ArrayAdapter<String> nexttask_arr_adapter;
 
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
@@ -55,10 +57,18 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
         builder.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
+                Task task = new Task();
                 EditText project_name = getDialog().findViewById(R.id.project_name);
-                String name = project_name.getText().toString();
-//                String name = startDatePicker.getText().toString();
-                mListener.onDialogPositiveClick(name);
+                task.name = project_name.getText().toString();
+                spinner_prevtask = getDialog().findViewById(R.id.spinner_prevtask);
+                task.prevTask = (String)spinner_prevtask.getSelectedItem();
+                spinner_nexttask = getDialog().findViewById(R.id.spinner_nexttask);
+                task.nextTask = (String)spinner_nexttask.getSelectedItem();
+                spinner_owner = getDialog().findViewById(R.id.spinner_owner);
+                task.owner = (String)spinner_owner.getSelectedItem();
+                task.startDate = startDatePicker.getText().toString();
+                task.endDate = endDatePicker.getText().toString();
+                mListener.onDialogPositiveClick(task.name);
 //                sendResult(0);
             }
         });
@@ -96,12 +106,14 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
         owner_data_list.add("Jason");
 
         prevtask_data_list = new ArrayList<String>();
+        prevtask_data_list.add("NONE");
         prevtask_data_list.add("Shopping");
         prevtask_data_list.add("Studying");
         prevtask_data_list.add("Movies");
         prevtask_data_list.add("Sleeping");
 
         nexttask_data_list = new ArrayList<String>();
+        prevtask_data_list.add("NONE");
         nexttask_data_list.add("Shopping");
         nexttask_data_list.add("Studying");
         nexttask_data_list.add("Movies");

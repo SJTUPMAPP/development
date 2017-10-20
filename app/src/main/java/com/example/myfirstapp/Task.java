@@ -39,6 +39,14 @@ public class Task {
     // property help us to keep data
     public int task_ID;
     public String name;
-    public String email;
-    public int age;
+    public String owner;
+    public String mainTask
+    public String prevTask;
+    public String nextTask;
+    public String startDate;
+    public String endDate;
+    public int row;
+    public int column;
+
+
 }
