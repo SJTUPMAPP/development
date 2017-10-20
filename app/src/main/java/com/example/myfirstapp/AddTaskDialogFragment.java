@@ -71,6 +71,9 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
                 task.endDate = endDatePicker.getText().toString();
                 task.mainTask = "AAA";
                 TaskAct.insert(task);
+                task.row = 2;
+                task.column = 3;
+                TaskAct.updateLocation(task);
                 mListener.onDialogPositiveClick(task.name);
 //                sendResult(0);
             }

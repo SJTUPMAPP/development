@@ -22,7 +22,6 @@ public class TaskActivity {
     public void insert(Task newtask){
         //Open connection to write data
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
         String insertQuery = "INSERT INTO " + Task.TABLE
                 + " (" +Task.Task_Name +"," + Task.Owner1 +","+ Task.CreateTime + "," + Task.StartDate1 +"," +Task.EndDate1+ "," +Task.Prev_Task
                 +"," + Task.Next_Task + "," + Task.Main_Task + ") VALUES ('"
@@ -49,9 +48,33 @@ public class TaskActivity {
         values.put(Task.Task_Name, task.name);
 
         // It's a good practice to use parameter ?, instead of concatenate string
-        db.update(Task.TABLE, values, Task.KEY_ID + "= ?", new String[] { String.valueOf(task.task_ID) });
+        db.update(Task.TABLE, values, Task.Task_Name + "= ?", new String[] {task.name});
         db.close(); // Closing database connection
 
+    }
+
+    public void updateRow(Task task){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Task.X, task.row);
+
+        // It's a good practice to use parameter ?, instead of concatenate string
+        db.update(Task.TABLE, values, Task.Task_Name + "= ?", new String[] {task.name});
+        db.close(); // Closing database connection
+
+    }
+
+    public void updateLocation(Task task){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Task.X, task.row);
+        values.put(Task.Y, task.column);
+
+        // It's a good practice to use parameter ?, instead of concatenate string
+        db.update(Task.TABLE, values, Task.Task_Name + "= ?", new String[] {task.name});
+        db.close(); // Closing database connection
     }
 
     public ArrayList<HashMap<String,String>> getTaskList(){
@@ -102,6 +125,68 @@ public class TaskActivity {
         db.close();
         return task;
 
+    }
+
+    //Find the row of previous task
+    public int findPrevRow(String prevTask){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        int row = 0;
+        String selectQuery = "SELECT " +  Task.X + " FROM " + Task.TABLE + " WHERE TaskName = ?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{prevTask});
+        if(cursor.moveToFirst()){
+            do{
+                row = cursor.getInt(cursor.getColumnIndex(Task.X));
+            }while(cursor.moveToNext());
+        }
+        return row;
+    }
+
+    //Find the row of next task
+    public int findNextRow(String nextTask){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        int row = 0;
+        String selectQuery = "SELECT " +  Task.X + " FROM " + Task.TABLE + " WHERE TaskName = ?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{nextTask});
+        if(cursor.moveToFirst()){
+            do{
+                row = cursor.getInt(cursor.getColumnIndex(Task.X));
+            }while(cursor.moveToNext());
+        }
+        return row;
+    }
+
+    public int findMaxColumn(int layer, int row){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        int maxColumn = 0;
+        int tempColumn;
+        String selectQuery = "SELECT " + Task.Y + " FROM " + Task.TABLE + " WHERE Layer = ? AND X = ?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(layer), String.valueOf(row)});
+        if(cursor.moveToFirst()){
+            do{
+                tempColumn = cursor.getInt(cursor.getColumnIndex(Task.Y));
+                if (tempColumn >= maxColumn){
+                    maxColumn = tempColumn;
+                }
+            }while(cursor.moveToNext());
+        }
+        return maxColumn;
+    }
+
+    public void LowerRow(int layer, int row){
+        Task newtask = new Task();
+        int id;
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT " + Task.X + " FROM " + Task.TABLE + " WHERE Layer = ? AND X >= ?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(layer), String.valueOf(row)});
+        if(cursor.moveToFirst()){
+            do{
+                id = cursor.getInt(cursor.getColumnIndex(Task.KEY_ID));
+                newtask = getTaskById(id);
+                newtask.row = newtask.row + 1;
+                updateRow(newtask);
+
+            }while(cursor.moveToNext());
+        }
     }
 
 
