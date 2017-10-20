@@ -49,29 +49,32 @@ public class Project extends Fragment implements AddTaskDialogFragment.addTaskDi
 
 
     @Override
-    public void onDialogPositiveClick(String name) {
+    public void onDialogPositiveClick(String name, int row, int column) {
         // User touched the dialog's positive button
         ConstraintLayout constraintLayout = (ConstraintLayout) getView().findViewById(R.id.fragment_project_layout);
         Button  mButton = new Button(getContext());
         mButton.setText(name);
         int mId = constraintLayout.generateViewId();
         mButton.setId(mId);
+        Log.v("mIdvalue",mId+"");
         constraintLayout.addView(mButton);
-
-        int width = constraintLayout.getWidth();
-        int height = constraintLayout.getHeight();
+            int width = constraintLayout.getWidth();
+            int height = constraintLayout.getHeight();
 //        ConstraintLayout.LayoutParams lp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-        ConstraintSet set = new ConstraintSet();
-        // You may want (optional) to start with the existing constraint,
-        // so uncomment this.
-        set.clone(constraintLayout);
-        // Resize to 100dp
-        // center horizontally in the container
-        set.centerHorizontally(mId, R.id.fragment_project_layout);
-        // pin to the bottom of the container
-        set.connect(mId, BOTTOM, R.id.fragment_project_layout, BOTTOM, height/2);
+            ConstraintSet set = new ConstraintSet();
+            // You may want (optional) to start with the existing constraint,
+            // so uncomment this.
+            set.clone(constraintLayout);
+            // Resize to 100dp
+            // center horizontally in the container
+            set.centerHorizontally(mId, R.id.fragment_project_layout);
+            // pin to the bottom of the container
+            set.connect(mId, BOTTOM, R.id.fragment_project_layout, BOTTOM, height/5*4);
+            set.applyTo(constraintLayout);
+
+
         // Apply the changes
-        set.applyTo(constraintLayout);
+
     }
 
     @Override
@@ -81,3 +84,4 @@ public class Project extends Fragment implements AddTaskDialogFragment.addTaskDi
     }
 
 }
+
