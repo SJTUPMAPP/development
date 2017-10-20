@@ -58,6 +58,7 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 Task task = new Task();
+                TaskActivity TaskAct = new TaskActivity(getContext());
                 EditText project_name = getDialog().findViewById(R.id.project_name);
                 task.name = project_name.getText().toString();
                 spinner_prevtask = getDialog().findViewById(R.id.spinner_prevtask);
@@ -68,6 +69,8 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
                 task.owner = (String)spinner_owner.getSelectedItem();
                 task.startDate = startDatePicker.getText().toString();
                 task.endDate = endDatePicker.getText().toString();
+                task.mainTask = "AAA";
+                TaskAct.insert(task);
                 mListener.onDialogPositiveClick(task.name);
 //                sendResult(0);
             }

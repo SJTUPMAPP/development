@@ -6,7 +6,7 @@ package com.example.myfirstapp;
 
 public class Task {
     // Labels table name
-    public static final String TABLE = "Student";
+    public static final String TABLE = "Task";
 
     // Labels Table Columns names
     public static final String KEY_ID = "ID";
@@ -40,7 +40,7 @@ public class Task {
     public int task_ID;
     public String name;
     public String owner;
-    public String mainTask
+    public String mainTask;
     public String prevTask;
     public String nextTask;
     public String startDate;
