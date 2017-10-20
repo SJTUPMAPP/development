@@ -23,4 +23,8 @@
     <string name="text_owner">Owner</string>
     <string name="text_prevtask">Previous Task</string>
     <string name="nexttask">Next Task</string>
+    <string name="person_name">Name</string>
+    <string name="person_email">Email</string>
+    <string name="person_Number">Phone Number</string>
+    <string name="text_department">Department</string>
 </resources>

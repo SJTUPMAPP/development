@@ -57,6 +57,7 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
             public void onClick(DialogInterface dialog, int id) {
                 EditText project_name = getDialog().findViewById(R.id.project_name);
                 String name = project_name.getText().toString();
+//                String name = startDatePicker.getText().toString();
                 mListener.onDialogPositiveClick(name);
 //                sendResult(0);
             }
@@ -135,11 +136,12 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
                         @Override
                         public void onDateSet(DatePicker view, int year,
                                               int monthOfYear, int dayOfMonth) {
+
                             if (v.getId() == R.id.btn_start_date) {
-                                startDatePicker.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                startDatePicker.setText(year+ ""+ (monthOfYear + 1) + "" + dayOfMonth);
                             }
                             else {
-                                endDatePicker.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                endDatePicker.setText(year+ "" +(monthOfYear + 1) + "" +dayOfMonth);
                             }
 
 

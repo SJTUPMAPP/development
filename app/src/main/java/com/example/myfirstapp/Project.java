@@ -1,14 +1,10 @@
 package com.example.myfirstapp;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,13 +33,17 @@ public class Project extends Fragment implements AddTaskDialogFragment.addTaskDi
                 showAddTaskDialog();
             }
         });
-
+        ConstraintLayout conLayout = view.findViewById(R.id.fragment_project_layout);
+        final DrawView drawview = new DrawView(getContext());
+        view.setMinimumHeight(500);
+        view.setMinimumWidth(300);
+        view.invalidate();
+        conLayout.addView(drawview);
         return view;
     }
 
     public void showAddTaskDialog() {
         DialogFragment newFragment = new AddTaskDialogFragment();
-//        newFragment.setTargetFragment(this,0);
         newFragment.show(this.getChildFragmentManager(), "dialog_fragment");
     }
 
@@ -60,7 +60,6 @@ public class Project extends Fragment implements AddTaskDialogFragment.addTaskDi
 
         int width = constraintLayout.getWidth();
         int height = constraintLayout.getHeight();
-//        ConstraintLayout.LayoutParams lp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
         ConstraintSet set = new ConstraintSet();
         // You may want (optional) to start with the existing constraint,
         // so uncomment this.

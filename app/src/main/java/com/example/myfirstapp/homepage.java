@@ -38,25 +38,11 @@ public class homepage extends AppCompatActivity {
         }
     };
 
-//    private ViewPager.OnPageChangeListener maddOnPageChangeListener
-//            = new ViewPager.OnPageChangeListener() {
-//        @Override
-//        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//        }
-//        @Override
-//        public void onPageSelected(int position) {
-//        }
-//        @Override
-//        public void onPageScrollStateChanged(int state) {
-//        }
-//    };
-
-
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(Dashboard.newInstance("AAAA"));
         adapter.addFragment(Project.newInstance("BBBB"));
-        adapter.addFragment(Dashboard.newInstance("CCCC"));
+        adapter.addFragment(Organization.newInstance("CCCC"));
         adapter.addFragment(Page4.newInstance("DDDD"));
         viewPager.setAdapter(adapter);
     }
