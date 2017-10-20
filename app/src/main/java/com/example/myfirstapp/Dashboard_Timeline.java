@@ -16,15 +16,6 @@ import com.google.android.gms.plus.PlusOneButton;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * A fragment with a Google +1 button.
- * Activities that contain this fragment must implement the
- * {@link Dashboard_Timeline.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Dashboard_Timeline#newInstance} factory method to
- * create an instance of this fragment.
- */
-
 public class Dashboard_Timeline extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -36,10 +27,6 @@ public class Dashboard_Timeline extends Fragment {
 
     }
 
-    /**
-     * Returns a new instance of this fragment for the given section
-     * number.
-     */
     public static Dashboard_Timeline newInstance(int sectionNumber) {
         Dashboard_Timeline fragment = new Dashboard_Timeline();
         Bundle args = new Bundle();

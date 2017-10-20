@@ -34,14 +34,7 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
     Button endDatePicker;
 
     private int mYear, mMonth, mDay;
-    public class Order{
-        public int row, column;
-        public String prevtask, nexttask;
-        public Order(String prevtask, String nexttask){
-            this.prevtask = prevtask;
-            this.nexttask = nexttask;
-        }
-    }
+
     private Spinner spinner_owner;
     private List<String> owner_data_list;
     private Spinner spinner_prevtask;
@@ -51,8 +44,6 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
     private ArrayAdapter<String> owner_arr_adapter;
     private ArrayAdapter<String> prevtask_arr_adapter;
     private ArrayAdapter<String> nexttask_arr_adapter;
-    public  int amount = 0;
-
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -60,22 +51,14 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_add, null);
-
         builder.setView(view);
         builder.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                Order []order = new Order[1000];
                 EditText project_name = getDialog().findViewById(R.id.project_name);
                 String name = project_name.getText().toString();
-                spinner_prevtask = getDialog().findViewById(R.id.spinner_prevtask);
-                //order.prevtask = (String)spinner_prevtask.getSelectedItem();
-                spinner_nexttask = getDialog().findViewById(R.id.spinner_nexttask);
-                //order.nexttask = (String)spinner_nexttask.getSelectedItem();
-                order[amount] = new Order((String)spinner_prevtask.getSelectedItem(),(String)spinner_nexttask.getSelectedItem());
-                amount++;
-
-                mListener.onDialogPositiveClick(name, order[amount].row, order[amount].column);
+//                String name = startDatePicker.getText().toString();
+                mListener.onDialogPositiveClick(name);
 //                sendResult(0);
             }
         });
@@ -117,14 +100,12 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
         prevtask_data_list.add("Studying");
         prevtask_data_list.add("Movies");
         prevtask_data_list.add("Sleeping");
-        prevtask_data_list.add("NULL");
 
         nexttask_data_list = new ArrayList<String>();
         nexttask_data_list.add("Shopping");
         nexttask_data_list.add("Studying");
         nexttask_data_list.add("Movies");
         nexttask_data_list.add("Sleeping");
-        prevtask_data_list.add("NULL");
 
         //适配器
         owner_arr_adapter= new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, owner_data_list);
@@ -155,11 +136,12 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
                         @Override
                         public void onDateSet(DatePicker view, int year,
                                               int monthOfYear, int dayOfMonth) {
+
                             if (v.getId() == R.id.btn_start_date) {
-                                startDatePicker.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                startDatePicker.setText(year+ ""+ (monthOfYear + 1) + "" + dayOfMonth);
                             }
                             else {
-                                endDatePicker.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                endDatePicker.setText(year+ "" +(monthOfYear + 1) + "" +dayOfMonth);
                             }
 
 
@@ -169,7 +151,7 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
     }
 
     public interface addTaskDialogListener {
-        void onDialogPositiveClick(String name, int row, int column);
+        void onDialogPositiveClick(String name);
         void onDialogNegativeClick(AddTaskDialogFragment dialog);
     }
 
