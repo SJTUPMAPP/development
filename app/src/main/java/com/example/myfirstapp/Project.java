@@ -34,7 +34,7 @@ public class Project extends Fragment implements AddTaskDialogFragment.addTaskDi
             }
         });
         ConstraintLayout conLayout = view.findViewById(R.id.fragment_project_layout);
-        final DrawView drawview = new DrawView(getContext());
+        final DrawView drawview = new DrawView(getContext(),100,100,100,200);
         view.setMinimumHeight(500);
         view.setMinimumWidth(300);
         view.invalidate();

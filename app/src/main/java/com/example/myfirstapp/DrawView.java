@@ -16,9 +16,16 @@ import android.view.View;
  * Created by elvischen on 19/10/2017.
  */
 
+
 public class DrawView extends View {
-    public DrawView(Context context) {
+    private int x1,x2,y1,y2;
+
+    public DrawView(Context context,int startx, int starty, int endx, int endy) {
         super(context);
+        x1 = startx;
+        x2 = endx;
+        y1 = starty;
+        y2 = endy;
     }
 
     @Override
@@ -39,10 +46,9 @@ public class DrawView extends View {
 //
 //        canvas.drawText("画线及弧线：", 10, 60, p);
 //        p.setColor(Color.GREEN);// 设置绿
-        canvas.rotate(330,100,100);
-        canvas.drawLine(100,100,100,500,p);
-        canvas.drawLine(100,500,120,480,p);
-        canvas.drawLine(100,500,80,480,p);
+        canvas.drawLine(x1,y1,x2,y2,p);
+        canvas.drawLine(x2,y2,x2+20,y2-20,p);
+        canvas.drawLine(x2,y2,x2-20,y2-20,p);
 //        canvas.drawLine(110, 40, 190, 80, p);// 斜线
 //        //画笑脸弧线
 //        p.setStyle(Paint.Style.STROKE);//设置空心
