@@ -70,11 +70,25 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
                 task.startDate = startDatePicker.getText().toString();
                 task.endDate = endDatePicker.getText().toString();
                 task.mainTask = "AAA";
+                task.layer = 0;
                 TaskAct.insert(task);
-                task.row = 2;
-                task.column = 3;
+                if(task.prevTask == "NONE") {
+                    task.row = 1;
+                    task.column = TaskAct.findMaxColumn(task.layer,task.row)+1;
+                }
+                else {
+                    task.row = TaskAct.findPrevRow(task.prevTask) + 1;
+                    if(TaskAct.findNextRow(task.nextTask) - TaskAct.findPrevRow(task.prevTask) == 1) {
+                        TaskAct.LowerRow(task.layer,TaskAct.findNextRow(task.nextTask));
+                        task.column = 1;
+                    }
+                    else{
+                        task.column = TaskAct.findMaxColumn(task.layer,task.row)+1;
+                    }
+                }
+
                 TaskAct.updateLocation(task);
-                mListener.onDialogPositiveClick(task.name);
+                mListener.onDialogPositiveClick(task.name, task.row, task.column);
 //                sendResult(0);
             }
         });
@@ -119,7 +133,7 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
         prevtask_data_list.add("Sleeping");
 
         nexttask_data_list = new ArrayList<String>();
-        prevtask_data_list.add("NONE");
+        nexttask_data_list.add("NONE");
         nexttask_data_list.add("Shopping");
         nexttask_data_list.add("Studying");
         nexttask_data_list.add("Movies");
@@ -169,7 +183,7 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
     }
 
     public interface addTaskDialogListener {
-        void onDialogPositiveClick(String name);
+        void onDialogPositiveClick(String name, int row, int column);
         void onDialogNegativeClick(AddTaskDialogFragment dialog);
     }
 

@@ -24,9 +24,9 @@ public class TaskActivity {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String insertQuery = "INSERT INTO " + Task.TABLE
                 + " (" +Task.Task_Name +"," + Task.Owner1 +","+ Task.CreateTime + "," + Task.StartDate1 +"," +Task.EndDate1+ "," +Task.Prev_Task
-                +"," + Task.Next_Task + "," + Task.Main_Task + ") VALUES ('"
+                +"," + Task.Next_Task + "," + Task.Main_Task + "," + Task.Layer +") VALUES ('"
                 + newtask.name + "','"+ newtask.owner + "','now', '"+ newtask.startDate +"','"+ newtask.endDate +"','"+ newtask.prevTask +"', '"
-                + newtask.nextTask +"', '"+ newtask.mainTask+"')";
+                + newtask.nextTask +"', '"+ newtask.mainTask+"','"+ newtask.layer +"')";
 
         //Inserting Row
         db.execSQL(insertQuery);

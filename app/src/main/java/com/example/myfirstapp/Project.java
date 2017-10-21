@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import static android.support.constraint.ConstraintLayout.LayoutParams.BOTTOM;
+import static android.support.constraint.ConstraintLayout.LayoutParams.LEFT;
+import static android.support.constraint.ConstraintLayout.LayoutParams.TOP;
 
 
 public class Project extends Fragment implements AddTaskDialogFragment.addTaskDialogListener{
@@ -49,7 +51,7 @@ public class Project extends Fragment implements AddTaskDialogFragment.addTaskDi
 
 
     @Override
-    public void onDialogPositiveClick(String name) {
+    public void onDialogPositiveClick(String name, int row, int column) {
         // User touched the dialog's positive button
         ConstraintLayout constraintLayout = (ConstraintLayout) getView().findViewById(R.id.fragment_project_layout);
         Button  mButton = new Button(getContext());
@@ -66,9 +68,9 @@ public class Project extends Fragment implements AddTaskDialogFragment.addTaskDi
         set.clone(constraintLayout);
         // Resize to 100dp
         // center horizontally in the container
-        set.centerHorizontally(mId, R.id.fragment_project_layout);
+        set.connect(mId, TOP, R.id.fragment_project_layout, TOP, height/6*row );
         // pin to the bottom of the container
-        set.connect(mId, BOTTOM, R.id.fragment_project_layout, BOTTOM, height/2);
+        set.connect(mId, LEFT, R.id.fragment_project_layout, LEFT, width/4*column);
         // Apply the changes
         set.applyTo(constraintLayout);
     }
