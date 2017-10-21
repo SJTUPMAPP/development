@@ -26,7 +26,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //All necessary tables you like to create will create here
 
-        String CREATE_TABLE_STUDENT = "CREATE TABLE " + Task.TABLE  + "("
+        String CREATE_TABLE_TASK = "CREATE TABLE " + Task.TABLE  + "("
                 + Task.KEY_ID  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
                 + Task.Task_Name + " TEXT, "
                 + Task.Prev_Task + " TEXT, "
@@ -51,7 +51,20 @@ public class DBHelper extends SQLiteOpenHelper {
                 + Task.EndDate3 + " TEXT, "
                 + Task.Comment + " TEXT )";
 
-        db.execSQL(CREATE_TABLE_STUDENT);
+        db.execSQL(CREATE_TABLE_TASK);
+
+        String CREATE_TABLE_EMPLOYEE = "CREATE TABLE " + Employee.TABLE  + "("
+                + Employee.KEY_ID  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+                + Employee.Employee_Name + " TEXT, "
+                + Employee.Title + " TEXT, "
+                + Employee.Office + " TEXT, "
+                + Employee.Department + " TEXT, "
+                + Employee.Email + " TEXT, "
+                + Employee.Mobile + " TEXT, "
+                + Employee.Phone + " TEXT, "
+                + Employee.Comment + " TEXT )";
+
+        db.execSQL(CREATE_TABLE_EMPLOYEE);
 
     }
 
@@ -59,6 +72,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed, all data will be gone!!!
         db.execSQL("DROP TABLE IF EXISTS " + Task.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + Employee.TABLE);
 
         // Create tables again
         onCreate(db);

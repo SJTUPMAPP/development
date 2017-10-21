@@ -24,9 +24,9 @@ public class TaskActivity {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String insertQuery = "INSERT INTO " + Task.TABLE
                 + " (" +Task.Task_Name +"," + Task.Owner1 +","+ Task.CreateTime + "," + Task.StartDate1 +"," +Task.EndDate1+ "," +Task.Prev_Task
-                +"," + Task.Next_Task + "," + Task.Main_Task + "," + Task.Layer +") VALUES ('"
-                + newtask.name + "','"+ newtask.owner + "','now', '"+ newtask.startDate +"','"+ newtask.endDate +"','"+ newtask.prevTask +"', '"
-                + newtask.nextTask +"', '"+ newtask.mainTask+"','"+ newtask.layer +"')";
+                +"," + Task.Next_Task + "," + Task.Main_Task + "," + Task.Level +") VALUES ('"
+                + newtask.name + "','"+ newtask.owner + "', datetime('now', 'localtime'), '"+ newtask.startDate +"','"+ newtask.endDate +"','"+ newtask.prevTask +"', '"
+                + newtask.nextTask +"', '"+ newtask.mainTask+"',"+ newtask.level +")";
 
         //Inserting Row
         db.execSQL(insertQuery);
@@ -155,12 +155,12 @@ public class TaskActivity {
         return row;
     }
 
-    public int findMaxColumn(int layer, int row){
+    public int findMaxColumn(int level, int row){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         int maxColumn = 0;
         int tempColumn;
-        String selectQuery = "SELECT " + Task.Y + " FROM " + Task.TABLE + " WHERE Layer = ? AND X = ?";
-        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(layer), String.valueOf(row)});
+        String selectQuery = "SELECT " + Task.Y + " FROM " + Task.TABLE + " WHERE Level = ? AND X = ?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(level), String.valueOf(row)});
         if(cursor.moveToFirst()){
             do{
                 tempColumn = cursor.getInt(cursor.getColumnIndex(Task.Y));
@@ -172,12 +172,13 @@ public class TaskActivity {
         return maxColumn;
     }
 
-    public void LowerRow(int layer, int row){
+    //Increase the value of the row, when its row >= row
+    public void LowerRow(int level, int row){
         Task newtask = new Task();
         int id;
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT " + Task.X + " FROM " + Task.TABLE + " WHERE Layer = ? AND X >= ?";
-        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(layer), String.valueOf(row)});
+        String selectQuery = "SELECT " + Task.X + " FROM " + Task.TABLE + " WHERE Level = ? AND X >= ?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(level), String.valueOf(row)});
         if(cursor.moveToFirst()){
             do{
                 id = cursor.getInt(cursor.getColumnIndex(Task.KEY_ID));

@@ -70,20 +70,20 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
                 task.startDate = startDatePicker.getText().toString();
                 task.endDate = endDatePicker.getText().toString();
                 task.mainTask = "AAA";
-                task.layer = 0;
+                task.level = 0;
                 TaskAct.insert(task);
                 if(task.prevTask == "NONE") {
                     task.row = 1;
-                    task.column = TaskAct.findMaxColumn(task.layer,task.row)+1;
+                    task.column = TaskAct.findMaxColumn(task.level,task.row)+1;
                 }
                 else {
                     task.row = TaskAct.findPrevRow(task.prevTask) + 1;
                     if(TaskAct.findNextRow(task.nextTask) - TaskAct.findPrevRow(task.prevTask) == 1) {
-                        TaskAct.LowerRow(task.layer,TaskAct.findNextRow(task.nextTask));
+                        TaskAct.LowerRow(task.level,TaskAct.findNextRow(task.nextTask));
                         task.column = 1;
                     }
                     else{
-                        task.column = TaskAct.findMaxColumn(task.layer,task.row)+1;
+                        task.column = TaskAct.findMaxColumn(task.level,task.row)+1;
                     }
                 }
 
@@ -170,10 +170,10 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
                                               int monthOfYear, int dayOfMonth) {
 
                             if (v.getId() == R.id.btn_start_date) {
-                                startDatePicker.setText(year+ ""+ (monthOfYear + 1) + "" + dayOfMonth);
+                                startDatePicker.setText(year+ "-"+ (monthOfYear + 1) + "-" + dayOfMonth);
                             }
                             else {
-                                endDatePicker.setText(year+ "" +(monthOfYear + 1) + "" +dayOfMonth);
+                                endDatePicker.setText(year+ "-" +(monthOfYear + 1) + "-" +dayOfMonth);
                             }
 
 
