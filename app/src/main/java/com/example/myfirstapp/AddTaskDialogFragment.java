@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
@@ -54,6 +55,10 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_add, null);
         builder.setView(view);
+        prevtask_data_list = new ArrayList<String>();
+        prevtask_data_list.add("NONE");
+        nexttask_data_list = new ArrayList<String>();
+        nexttask_data_list.add("NONE");
         builder.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
@@ -125,19 +130,19 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
         owner_data_list.add("Marx");
         owner_data_list.add("Jason");
 
-        prevtask_data_list = new ArrayList<String>();
+        /*prevtask_data_list = new ArrayList<String>();
         prevtask_data_list.add("NONE");
         prevtask_data_list.add("Shopping");
         prevtask_data_list.add("Studying");
         prevtask_data_list.add("Movies");
-        prevtask_data_list.add("Sleeping");
+        prevtask_data_list.add("Sleeping");*/
 
         nexttask_data_list = new ArrayList<String>();
         nexttask_data_list.add("NONE");
-        nexttask_data_list.add("Shopping");
+        /*nexttask_data_list.add("Shopping");
         nexttask_data_list.add("Studying");
         nexttask_data_list.add("Movies");
-        nexttask_data_list.add("Sleeping");
+        nexttask_data_list.add("Sleeping");*/
 
         //适配器
         owner_arr_adapter= new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, owner_data_list);

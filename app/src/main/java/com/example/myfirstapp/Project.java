@@ -1,17 +1,24 @@
 package com.example.myfirstapp;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+
 
 import static android.support.constraint.ConstraintLayout.LayoutParams.BOTTOM;
 import static android.support.constraint.ConstraintLayout.LayoutParams.LEFT;
+import static android.support.constraint.ConstraintLayout.LayoutParams.RIGHT;
+import static android.support.constraint.ConstraintLayout.LayoutParams.START;
 import static android.support.constraint.ConstraintLayout.LayoutParams.TOP;
 
 
@@ -53,6 +60,7 @@ public class Project extends Fragment implements AddTaskDialogFragment.addTaskDi
     @Override
     public void onDialogPositiveClick(String name, int row, int column) {
         // User touched the dialog's positive button
+        //RelativeLayout relativeLayout = (RelativeLayout) getView().findViewById(R.id.fragment_relative_layout);
         ConstraintLayout constraintLayout = (ConstraintLayout) getView().findViewById(R.id.fragment_project_layout);
         Button  mButton = new Button(getContext());
         mButton.setText(name);
@@ -60,19 +68,32 @@ public class Project extends Fragment implements AddTaskDialogFragment.addTaskDi
         mButton.setId(mId);
         constraintLayout.addView(mButton);
 
-        int width = constraintLayout.getWidth();
-        int height = constraintLayout.getHeight();
+        Resources resources = this.getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        float density = dm.density;
+        int width = dm.widthPixels;
+        int height = dm.heightPixels;
+        int gap = width/10;
+        //int width = constraintLayout.getWidth();
+        //int height = constraintLayout.getHeight();
         ConstraintSet set = new ConstraintSet();
         // You may want (optional) to start with the existing constraint,
         // so uncomment this.
         set.clone(constraintLayout);
         // Resize to 100dp
         // center horizontally in the container
-        set.connect(mId, TOP, R.id.fragment_project_layout, TOP, height/6*row );
+        set.connect(mId, TOP, R.id.fragment_project_layout, TOP, height/6*10*row+gap*row );
         // pin to the bottom of the container
-        set.connect(mId, LEFT, R.id.fragment_project_layout, LEFT, width/4*column);
+        set.connect(mId, ConstraintSet.START, R.id.fragment_project_layout, ConstraintSet.START, width/4*column+gap*column);
         // Apply the changes
         set.applyTo(constraintLayout);
+        //RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)mButton.getLayoutParams();
+        //params.topMargin = height/6*row;
+        //params.leftMargin = width/4*column;
+        //mButton.setLayoutParams(params);
+        Log.e("",row+"row");
+        Log.e("", column+"column");
+        Log.e("", mId+"mId");
     }
 
     @Override
