@@ -177,10 +177,11 @@ public class TaskActivity {
         Task newtask = new Task();
         int id;
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT " + Task.X + " FROM " + Task.TABLE + " WHERE Level = ? AND X >= ?";
+        String selectQuery = "SELECT " + Task.KEY_ID + "," + Task.X + " FROM " + Task.TABLE + " WHERE Level = ? AND X >= ?";
         Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(level), String.valueOf(row)});
         if(cursor.moveToFirst()){
             do{
+
                 id = cursor.getInt(cursor.getColumnIndex(Task.KEY_ID));
                 newtask = getTaskById(id);
                 newtask.row = newtask.row + 1;
