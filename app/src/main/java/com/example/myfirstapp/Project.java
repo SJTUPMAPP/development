@@ -53,12 +53,19 @@ public class Project extends Fragment implements AddTaskDialogFragment.addTaskDi
 
 
     @Override
-    public void onDialogPositiveClick(String name, int row, int column) {
+    public void onDialogPositiveClick(final String name, int row, int column) {
         // User touched the dialog's positive button
         //RelativeLayout relativeLayout = (RelativeLayout) getView().findViewById(R.id.fragment_relative_layout);
         ConstraintLayout constraintLayout = (ConstraintLayout) getView().findViewById(R.id.fragment_project_layout);
         Button  mButton = new Button(getContext());
         mButton.setText(name);
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment newFragment = new AddTaskDialogFragment();
+                newFragment.show(getChildFragmentManager(),"dialog_fragment");
+            }
+        });
         int mId = constraintLayout.generateViewId();
         mButton.setId(mId);
         constraintLayout.addView(mButton);

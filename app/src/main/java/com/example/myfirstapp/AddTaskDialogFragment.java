@@ -48,7 +48,7 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
         View view = inflater.inflate(R.layout.dialog_add, null);
         builder.setView(view);
 
-
+        TaskActivity Tact = new TaskActivity(getContext());
 
         //        Date picker settings
         startDatePicker = view.findViewById(R.id.btn_start_date);
@@ -72,8 +72,10 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
 
         //数据
         prevtask_data_list = new ArrayList<String>();
+        prevtask_data_list = Tact.getTaskNameList();
         prevtask_data_list.add("NONE");
         nexttask_data_list = new ArrayList<String>();
+        nexttask_data_list = Tact.getTaskNameList();
         nexttask_data_list.add("NONE");
 
         owner_data_list = new ArrayList<String>();
