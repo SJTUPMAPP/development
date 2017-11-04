@@ -1,4 +1,5 @@
 package com.example.myfirstapp;
+
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -12,13 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 
-
-import static android.support.constraint.ConstraintLayout.LayoutParams.BOTTOM;
-import static android.support.constraint.ConstraintLayout.LayoutParams.LEFT;
-import static android.support.constraint.ConstraintLayout.LayoutParams.RIGHT;
-import static android.support.constraint.ConstraintLayout.LayoutParams.START;
 import static android.support.constraint.ConstraintLayout.LayoutParams.TOP;
 
 
@@ -82,7 +77,7 @@ public class Project extends Fragment implements AddTaskDialogFragment.addTaskDi
         set.clone(constraintLayout);
         // Resize to 100dp
         // center horizontally in the container
-        set.connect(mId, TOP, R.id.fragment_project_layout, TOP, height/6*10*row+gap*row );
+        set.connect(mId, TOP, R.id.fragment_project_layout, TOP, height/6*row+gap*row );
         // pin to the bottom of the container
         set.connect(mId, ConstraintSet.START, R.id.fragment_project_layout, ConstraintSet.START, width/4*column+gap*column);
         // Apply the changes
