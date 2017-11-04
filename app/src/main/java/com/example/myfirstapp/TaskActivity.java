@@ -190,5 +190,31 @@ public class TaskActivity {
         }
     }
 
+    public ArrayList<String> getTaskNameList(){
+        //Open connection to read only
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT " +
+                Task.KEY_ID + "," +
+                Task.Task_Name+
+                " FROM " + Task.TABLE;
+
+        ArrayList<String> taskList = new ArrayList<String>();
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                String task;
+                task = cursor.getString(cursor.getColumnIndex(Task.Task_Name));
+                taskList.add(task);
+
+            }while(cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return taskList;
+    }
+
 
 }
