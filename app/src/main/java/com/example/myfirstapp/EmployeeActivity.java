@@ -202,7 +202,6 @@ public class EmployeeActivity {
                 " FROM " + Employee.TABLE;
 
         ArrayList<String> taskList = new ArrayList<String>();
-
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if(cursor.moveToFirst()){

@@ -181,9 +181,9 @@ public class TaskActivity {
         Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(level), String.valueOf(row)});
         if(cursor.moveToFirst()){
             do{
-
                 id = cursor.getInt(cursor.getColumnIndex(Task.KEY_ID));
                 newtask = getTaskById(id);
+                newtask.row = cursor.getInt(cursor.getColumnIndex(Task.X));
                 newtask.row = newtask.row + 1;
                 updateRow(newtask);
 
@@ -250,5 +250,31 @@ public class TaskActivity {
         return taskList;
     }
 
+    public ArrayList<Task> getButtonList(){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT " +
+                Task.KEY_ID + "," +
+                Task.Task_Name +"," +
+                Task.X + "," +
+                Task.Y +
+                " FROM " +Task.TABLE;
+        ArrayList<Task> taskList = new ArrayList<Task>();
+
+        Cursor cursor = db.rawQuery(selectQuery,null);
+
+        if(cursor.moveToFirst()){
+            do{
+                Task newtask = new Task();
+                newtask.task_ID = cursor.getInt(cursor.getColumnIndex(Task.KEY_ID));
+                newtask.name = cursor.getString(cursor.getColumnIndex(Task.Task_Name));
+                newtask.row = cursor.getInt(cursor.getColumnIndex(Task.X));
+                newtask.column = cursor.getInt(cursor.getColumnIndex(Task.Y));
+
+            }while(cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return taskList;
+    }
 
 }
