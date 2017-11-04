@@ -190,5 +190,64 @@ public class TaskActivity {
         }
     }
 
+    public ArrayList<String> getTaskNameList(){
+        //Open connection to read only
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT " +
+                Task.KEY_ID + "," +
+                Task.Task_Name+
+                " FROM " + Task.TABLE;
+
+        ArrayList<String> taskList = new ArrayList<String>();
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                String task;
+                task = cursor.getString(cursor.getColumnIndex(Task.Task_Name));
+                taskList.add(task);
+
+            }while(cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return taskList;
+    }
+
+    public ArrayList<Task> getActionList(){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT " +
+                Task.KEY_ID + "," +
+                Task.Task_Name +"," +
+                Task.Owner1 + "," +
+                Task.StartDate1 +"," +
+                Task.EndDate1 + ","+
+                Task.Status +","+
+                Task.Comment +
+                " FROM " +Task.TABLE;
+        ArrayList<Task> taskList = new ArrayList<Task>();
+
+        Cursor cursor = db.rawQuery(selectQuery,null);
+
+        if(cursor.moveToFirst()){
+            do{
+                Task newtask = new Task();
+                newtask.task_ID = cursor.getInt(cursor.getColumnIndex(Task.KEY_ID));
+                newtask.name = cursor.getString(cursor.getColumnIndex(Task.Task_Name));
+                newtask.owner = cursor.getString(cursor.getColumnIndex(Task.Owner1));
+                newtask.startDate = cursor.getString(cursor.getColumnIndex(Task.StartDate1));
+                newtask.endDate = cursor.getString(cursor.getColumnIndex(Task.EndDate1));
+                newtask.status = cursor.getString(cursor.getColumnIndex(Task.Status));
+                newtask.comment = cursor.getString(cursor.getColumnIndex(Task.Comment));
+
+            }while(cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return taskList;
+    }
+
 
 }
