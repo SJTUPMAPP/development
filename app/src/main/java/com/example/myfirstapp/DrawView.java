@@ -47,8 +47,8 @@ public class DrawView extends View {
 //        canvas.drawText("画线及弧线：", 10, 60, p);
 //        p.setColor(Color.GREEN);// 设置绿
         canvas.drawLine(x1,y1,x2,y2,p);
-        canvas.drawLine(x2,y2,x2+20,y2-20,p);
-        canvas.drawLine(x2,y2,x2-20,y2-20,p);
+//        canvas.drawLine(x2,y2,x2+20,y2-20,p);
+//        canvas.drawLine(x2,y2,x2-20,y2-20,p);
 //        canvas.drawLine(110, 40, 190, 80, p);// 斜线
 //        //画笑脸弧线
 //        p.setStyle(Paint.Style.STROKE);//设置空心
