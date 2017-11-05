@@ -49,6 +49,7 @@ public class Task {
     public int row;
     public int column;
     public int level;
+    public int rank;
     public String status;
     public String comment;
 

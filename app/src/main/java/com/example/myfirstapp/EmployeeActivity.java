@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by User on 2017/10/4.
@@ -80,32 +79,32 @@ public class EmployeeActivity {
         db.close(); // Closing database connection
     }
 
-    public ArrayList<HashMap<String,String>> getEmployeeList(){
-        //Open connection to read only
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT " +
-                Employee.KEY_ID + "," +
-                Employee.Employee_Name+
-                " FROM " + Employee.TABLE;
-
-        ArrayList<HashMap<String, String>> studentList = new ArrayList<HashMap<String, String>>();
-
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if(cursor.moveToFirst()){
-            do{
-                HashMap<String, String> student = new HashMap<String, String>();
-                student.put("ID", cursor.getString(cursor.getColumnIndex(Employee.KEY_ID)));
-                student.put("EmployeeName", cursor.getString(cursor.getColumnIndex(Employee.Employee_Name)));
-                studentList.add(student);
-
-            }while(cursor.moveToNext());
-        }
-
-        cursor.close();
-        db.close();
-        return studentList;
-    }
+//    public ArrayList<HashMap<String,String>> getEmployeeList(){
+//        //Open connection to read only
+//        SQLiteDatabase db = dbHelper.getReadableDatabase();
+//        String selectQuery = "SELECT " +
+//                Employee.KEY_ID + "," +
+//                Employee.Employee_Name+
+//                " FROM " + Employee.TABLE;
+//
+//        ArrayList<HashMap<String, String>> studentList = new ArrayList<HashMap<String, String>>();
+//
+//        Cursor cursor = db.rawQuery(selectQuery, null);
+//
+//        if(cursor.moveToFirst()){
+//            do{
+//                HashMap<String, String> student = new HashMap<String, String>();
+//                student.put("ID", cursor.getString(cursor.getColumnIndex(Employee.KEY_ID)));
+//                student.put("EmployeeName", cursor.getString(cursor.getColumnIndex(Employee.Employee_Name)));
+//                studentList.add(student);
+//
+//            }while(cursor.moveToNext());
+//        }
+//
+//        cursor.close();
+//        db.close();
+//        return studentList;
+//    }
 
     public Employee getEmployeeById(int Id){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
