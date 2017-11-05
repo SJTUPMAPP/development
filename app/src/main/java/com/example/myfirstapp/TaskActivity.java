@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by User on 2017/10/4.
@@ -77,32 +76,32 @@ public class TaskActivity {
         db.close(); // Closing database connection
     }
 
-    public ArrayList<HashMap<String,String>> getTaskList(){
-        //Open connection to read only
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT " +
-                Task.KEY_ID + "," +
-                Task.Task_Name+
-                " FROM " + Task.TABLE;
-
-        ArrayList<HashMap<String, String>> studentList = new ArrayList<HashMap<String, String>>();
-
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if(cursor.moveToFirst()){
-            do{
-                HashMap<String, String> student = new HashMap<String, String>();
-                student.put("ID", cursor.getString(cursor.getColumnIndex(Task.KEY_ID)));
-                student.put("TaskName", cursor.getString(cursor.getColumnIndex(Task.Task_Name)));
-                studentList.add(student);
-
-            }while(cursor.moveToNext());
-        }
-
-        cursor.close();
-        db.close();
-        return studentList;
-    }
+//    public ArrayList<HashMap<String,String>> getTaskList(){
+//        //Open connection to read only
+//        SQLiteDatabase db = dbHelper.getReadableDatabase();
+//        String selectQuery = "SELECT " +
+//                Task.KEY_ID + "," +
+//                Task.Task_Name+
+//                " FROM " + Task.TABLE;
+//
+//        ArrayList<HashMap<String, String>> studentList = new ArrayList<HashMap<String, String>>();
+//
+//        Cursor cursor = db.rawQuery(selectQuery, null);
+//
+//        if(cursor.moveToFirst()){
+//            do{
+//                HashMap<String, String> student = new HashMap<String, String>();
+//                student.put("ID", cursor.getString(cursor.getColumnIndex(Task.KEY_ID)));
+//                student.put("TaskName", cursor.getString(cursor.getColumnIndex(Task.Task_Name)));
+//                studentList.add(student);
+//
+//            }while(cursor.moveToNext());
+//        }
+//
+//        cursor.close();
+//        db.close();
+//        return studentList;
+//    }
 
     public Task getTaskById(int Id){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -242,6 +241,7 @@ public class TaskActivity {
                 newtask.endDate = cursor.getString(cursor.getColumnIndex(Task.EndDate1));
                 newtask.status = cursor.getString(cursor.getColumnIndex(Task.Status));
                 newtask.comment = cursor.getString(cursor.getColumnIndex(Task.Comment));
+                taskList.add(newtask);
 
             }while(cursor.moveToNext());
         }
@@ -269,6 +269,7 @@ public class TaskActivity {
                 newtask.name = cursor.getString(cursor.getColumnIndex(Task.Task_Name));
                 newtask.row = cursor.getInt(cursor.getColumnIndex(Task.X));
                 newtask.column = cursor.getInt(cursor.getColumnIndex(Task.Y));
+                taskList.add(newtask);
 
             }while(cursor.moveToNext());
         }
