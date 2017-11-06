@@ -360,9 +360,96 @@ public class TaskActivity {
         return newtask;
     }
 
-    //getTaskByTimeRange
+    public ArrayList<Task> getTasksByWeek(){
+        SQLiteDatabase db =dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + Task.TABLE +
+                " WHERE DATE(EndDate1) >= DATE('now', 'localtime','-1 day') " +
+                "AND DATE(EndDate1) < DATE('now','localtime','+7 day') ";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        ArrayList<Task> task_List = new ArrayList<Task>();
 
-    //getTaskByWeek
+        if(cursor.moveToFirst()){
+            do{
+                Task newtask = new Task();
+                newtask.task_ID = cursor.getInt(cursor.getColumnIndex(Task.KEY_ID));
+                newtask.name = cursor.getString(cursor.getColumnIndex(Task.Task_Name));
+                newtask.prevTask = cursor.getString(cursor.getColumnIndex(Task.Prev_Task));
+                newtask.nextTask = cursor.getString(cursor.getColumnIndex(Task.Next_Task));
+                newtask.mainTask = cursor.getString(cursor.getColumnIndex(Task.Main_Task));
+                newtask.row = cursor.getInt(cursor.getColumnIndex(Task.X));
+                newtask.column = cursor.getInt(cursor.getColumnIndex(Task.Y));
+                newtask.rank = cursor.getInt(cursor.getColumnIndex(Task.Rank));
+                newtask.level = cursor.getInt(cursor.getColumnIndex(Task.Level));
+                newtask.owner = cursor.getString(cursor.getColumnIndex(Task.Owner1));
+                newtask.status = cursor.getString(cursor.getColumnIndex(Task.Status));
+                newtask.startDate = cursor.getString(cursor.getColumnIndex(Task.StartDate1));
+                newtask.endDate = cursor.getString(cursor.getColumnIndex(Task.EndDate1));
+                newtask.comment = cursor.getString(cursor.getColumnIndex(Task.Comment));
+                task_List.add(newtask);
 
-    //month
+            }while(cursor.moveToNext());
+        }
+        return task_List;
+    }
+
+    public ArrayList<Task> getTasksByDate(String date){
+        SQLiteDatabase db =dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + Task.TABLE +
+                " WHERE DATE(EndDate1) = DATE(" + date + ")";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        ArrayList<Task> task_List = new ArrayList<Task>();
+
+        if(cursor.moveToFirst()){
+            do{
+                Task newtask = new Task();
+                newtask.task_ID = cursor.getInt(cursor.getColumnIndex(Task.KEY_ID));
+                newtask.name = cursor.getString(cursor.getColumnIndex(Task.Task_Name));
+                newtask.prevTask = cursor.getString(cursor.getColumnIndex(Task.Prev_Task));
+                newtask.nextTask = cursor.getString(cursor.getColumnIndex(Task.Next_Task));
+                newtask.mainTask = cursor.getString(cursor.getColumnIndex(Task.Main_Task));
+                newtask.row = cursor.getInt(cursor.getColumnIndex(Task.X));
+                newtask.column = cursor.getInt(cursor.getColumnIndex(Task.Y));
+                newtask.rank = cursor.getInt(cursor.getColumnIndex(Task.Rank));
+                newtask.level = cursor.getInt(cursor.getColumnIndex(Task.Level));
+                newtask.owner = cursor.getString(cursor.getColumnIndex(Task.Owner1));
+                newtask.status = cursor.getString(cursor.getColumnIndex(Task.Status));
+                newtask.startDate = cursor.getString(cursor.getColumnIndex(Task.StartDate1));
+                newtask.endDate = cursor.getString(cursor.getColumnIndex(Task.EndDate1));
+                newtask.comment = cursor.getString(cursor.getColumnIndex(Task.Comment));
+                task_List.add(newtask);
+
+            }while(cursor.moveToNext());
+        }
+        return task_List;
+    }
+    public ArrayList<Task> getTasksByMonth(int month){
+        SQLiteDatabase db =dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + Task.TABLE +
+                " WHERE STRFTIME('%m', EndDate1) = " + month ;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        ArrayList<Task> task_List = new ArrayList<Task>();
+
+        if(cursor.moveToFirst()){
+            do{
+                Task newtask = new Task();
+                newtask.task_ID = cursor.getInt(cursor.getColumnIndex(Task.KEY_ID));
+                newtask.name = cursor.getString(cursor.getColumnIndex(Task.Task_Name));
+                newtask.prevTask = cursor.getString(cursor.getColumnIndex(Task.Prev_Task));
+                newtask.nextTask = cursor.getString(cursor.getColumnIndex(Task.Next_Task));
+                newtask.mainTask = cursor.getString(cursor.getColumnIndex(Task.Main_Task));
+                newtask.row = cursor.getInt(cursor.getColumnIndex(Task.X));
+                newtask.column = cursor.getInt(cursor.getColumnIndex(Task.Y));
+                newtask.rank = cursor.getInt(cursor.getColumnIndex(Task.Rank));
+                newtask.level = cursor.getInt(cursor.getColumnIndex(Task.Level));
+                newtask.owner = cursor.getString(cursor.getColumnIndex(Task.Owner1));
+                newtask.status = cursor.getString(cursor.getColumnIndex(Task.Status));
+                newtask.startDate = cursor.getString(cursor.getColumnIndex(Task.StartDate1));
+                newtask.endDate = cursor.getString(cursor.getColumnIndex(Task.EndDate1));
+                newtask.comment = cursor.getString(cursor.getColumnIndex(Task.Comment));
+                task_List.add(newtask);
+
+            }while(cursor.moveToNext());
+        }
+        return task_List;
+    }
 }
