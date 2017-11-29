@@ -1,10 +1,7 @@
 package com.example.myfirstapp;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +10,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.HashMap;
 
 
 /**
@@ -42,13 +37,6 @@ public class Dashboard_ActionList extends Fragment {
         //获取ListView,并通过Adapter把studentlist的信息显示到ListView
         //为ListView设置一个适配器,getCount()返回数据个数;getView()为每一行设置一个条目
         TaskActivity TaskAct = new TaskActivity(getContext());
-        Task newtask = new Task();
-        newtask.task_ID = 1;
-        newtask.name = "temp";
-        newtask.owner = "max";
-        newtask.status = "finish";
-        newtask.comment = "ok";
-        TaskAct.insert(newtask);
         tasklist = TaskAct.getActionList();
         lv.setAdapter(new BaseAdapter() {
             @Override
@@ -59,7 +47,7 @@ public class Dashboard_ActionList extends Fragment {
             //ListView的每一个条目都是一个view对象
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                task = tasklist.get(position);
+                task = tasklist.get(0);
                 View view;
                 //从studentlist中取出一行数据，position相当于数组下标,可以实现逐行取数据
                 if(convertView==null){

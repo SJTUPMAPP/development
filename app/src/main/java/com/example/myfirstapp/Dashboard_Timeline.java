@@ -1,7 +1,5 @@
 package com.example.myfirstapp;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.google.android.gms.plus.PlusOneButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,37 +58,48 @@ public class Dashboard_Timeline extends Fragment {
     //        init data for the timeline
     public void initData(){
         listItem = new ArrayList<HashMap<String, Object>>();/*在数组中存放数据*/
+        ArrayList<Task> tasklist = new ArrayList<>();
+        TaskActivity TaskAct = new TaskActivity(getContext());
+        tasklist = TaskAct.getTasksByWeek();
+        int cnt = TaskAct.getTasksByWeekCount();
+        for (int i = 0; i < cnt; i++){
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("ItemTitle", tasklist.get(i).name);
+            map.put("ItemText", tasklist.get(i).owner);
+            listItem.add(map);
+        }
+//        HashMap<String, Object> map1 = new HashMap<String, Object>();
+//        HashMap<String, Object> map2 = new HashMap<String, Object>();
+//        HashMap<String, Object> map3 = new HashMap<String, Object>();
+//        HashMap<String, Object> map4 = new HashMap<String, Object>();
+//        HashMap<String, Object> map5 = new HashMap<String, Object>();
+//        HashMap<String, Object> map6 = new HashMap<String, Object>();
+//        map1.put("ItemTitle", tasklist.get(0).name);
+//        map1.put("ItemText", String.valueOf(cnt));
+//        listItem.add(map1);
+//
+//        map2.put("ItemTitle", tasklist.get(1).name);
+//        map2.put("ItemText", "等待中转");
+//        listItem.add(map2);
+//
+//        map3.put("ItemTitle", "国际顺丰转件中");
+//        map3.put("ItemText", "下一站中国");
+//        listItem.add(map3);
+//
+//        map4.put("ItemTitle", "中国顺丰已收入");
+//        map4.put("ItemText", "下一站广州华南理工大学");
+//        listItem.add(map4);
+//
+//        map5.put("ItemTitle", "中国顺丰派件中");
+//        map5.put("ItemText", "等待派件");
+//        listItem.add(map5);
+//
+//        map6.put("ItemTitle", "华南理工大学已签收");
+//        map6.put("ItemText", "收件人:Carson");
+//        listItem.add(map6);
+//
 
-        HashMap<String, Object> map1 = new HashMap<String, Object>();
-        HashMap<String, Object> map2 = new HashMap<String, Object>();
-        HashMap<String, Object> map3 = new HashMap<String, Object>();
-        HashMap<String, Object> map4 = new HashMap<String, Object>();
-        HashMap<String, Object> map5 = new HashMap<String, Object>();
-        HashMap<String, Object> map6 = new HashMap<String, Object>();
 
-        map1.put("ItemTitle", "美国谷歌公司已发出");
-        map1.put("ItemText", "发件人:谷歌 CEO Sundar Pichai");
-        listItem.add(map1);
-
-        map2.put("ItemTitle", "国际顺丰已收入");
-        map2.put("ItemText", "等待中转");
-        listItem.add(map2);
-
-        map3.put("ItemTitle", "国际顺丰转件中");
-        map3.put("ItemText", "下一站中国");
-        listItem.add(map3);
-
-        map4.put("ItemTitle", "中国顺丰已收入");
-        map4.put("ItemText", "下一站广州华南理工大学");
-        listItem.add(map4);
-
-        map5.put("ItemTitle", "中国顺丰派件中");
-        map5.put("ItemText", "等待派件");
-        listItem.add(map5);
-
-        map6.put("ItemTitle", "华南理工大学已签收");
-        map6.put("ItemText", "收件人:Carson");
-        listItem.add(map6);
     }
 
 

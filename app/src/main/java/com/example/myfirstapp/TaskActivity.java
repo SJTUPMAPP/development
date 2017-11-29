@@ -391,7 +391,20 @@ public class TaskActivity {
         }
         return task_List;
     }
-
+    public int getTasksByWeekCount(){
+        int cnt = -1;
+        SQLiteDatabase db =dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + Task.TABLE +
+                " WHERE DATE(EndDate1) >= DATE('now', 'localtime','-1 day') " +
+                "AND DATE(EndDate1) < DATE('now','localtime','+7 day') ";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if(cursor.moveToFirst()){
+            do{
+                 cnt = cursor.getCount();
+            }while(cursor.moveToNext());
+        }
+        return cnt;
+    }
     public ArrayList<Task> getTasksByDate(String date){
         SQLiteDatabase db =dbHelper.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + Task.TABLE +
@@ -422,6 +435,8 @@ public class TaskActivity {
         }
         return task_List;
     }
+
+
     public ArrayList<Task> getTasksByMonth(int month){
         SQLiteDatabase db =dbHelper.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + Task.TABLE +

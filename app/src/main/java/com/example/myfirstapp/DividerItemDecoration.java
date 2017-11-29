@@ -9,6 +9,8 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import java.util.ArrayList;
+
 /**
  * Created by elvischen on 02/10/2017.
  */
@@ -31,6 +33,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
     // 图标
     private Bitmap mIcon;
+
 
 
     // 在构造函数里进行绘制的初始化，如画笔属性设置等
@@ -85,6 +88,9 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
         // 获取RecyclerView的Child view的个数
         int childCount = parent.getChildCount();
+        TaskActivity TaskAct = new TaskActivity(parent.getContext());
+        ArrayList<Task> tasklist = new ArrayList<>();
+        tasklist = TaskAct.getTasksByWeek();
 
         // 遍历每个Item，分别获取它们的位置信息，然后再绘制对应的分割线
         for (int i = 0; i < childCount; i++) {
@@ -136,45 +142,52 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
              * 绘制左边时间文本
              */
             // 获取每个Item的位置
-            int index = parent.getChildAdapterPosition(child);
+            //int index = parent.getChildAdapterPosition(child);
             // 设置文本起始坐标
             float Text_x = child.getLeft() - itemView_leftinterval * 5 / 6;
             float Text_y = upLine_bottom_y;
 
             // 根据Item位置设置时间文本
-            switch (index) {
-                case (0):
-                    // 设置日期绘制位置
-                    c.drawText("13:40", Text_x, Text_y, mPaint1);
-                    c.drawText("2017.4.03", Text_x + 5, Text_y + 50, mPaint2);
-                    break;
-                case (1):
-                    // 设置日期绘制位置
-                    c.drawText("17:33", Text_x, Text_y, mPaint1);
-                    c.drawText("2017.4.03", Text_x + 5, Text_y + 50, mPaint2);
-                    break;
-                case (2):
-                    // 设置日期绘制位置
-                    c.drawText("20:13", Text_x, Text_y, mPaint1);
-                    c.drawText("2017.4.03", Text_x + 5, Text_y + 50, mPaint2);
-                    break;
-                case (3):
-                    // 设置日期绘制位置
-                    c.drawText("11:40", Text_x, Text_y, mPaint1);
-                    c.drawText("2017.4.04", Text_x + 5, Text_y + 50, mPaint2);
-                    break;
-                case (4):
-                    // 设置日期绘制位置
-                    c.drawText("13:20", Text_x, Text_y, mPaint1);
-                    c.drawText("2017.4.04", Text_x + 5, Text_y + 50, mPaint2);
-                    break;
-                case (5):
-                    // 设置日期绘制位置
-                    c.drawText("22:40", Text_x, Text_y, mPaint1);
-                    c.drawText("2017.4.04", Text_x + 5, Text_y + 50, mPaint2);
-                    break;
-                default:c.drawText("已签收", Text_x, Text_y, mPaint1);
-            }
+
+
+
+
+            c.drawText(tasklist.get(i).name, Text_x, Text_y, mPaint1);
+            c.drawText(tasklist.get(i).name, Text_x + 5, Text_y + 50, mPaint2);
+
+//            switch (index) {
+//                case (0):
+//                    // 设置日期绘制位置
+//                    c.drawText(tasklist.get(index).name, Text_x, Text_y, mPaint1);
+//                    c.drawText(tasklist.get(i).name, Text_x + 5, Text_y + 50, mPaint2);
+//                    break;
+//                case (1):
+//                    // 设置日期绘制位置
+//                    c.drawText(tasklist.get(i).name, Text_x, Text_y, mPaint1);
+//                    c.drawText(tasklist.get(i).name, Text_x + 5, Text_y + 50, mPaint2);
+//                    break;
+//                case (2):
+//                    // 设置日期绘制位置
+//                    c.drawText("20:13", Text_x, Text_y, mPaint1);
+//                    c.drawText("2017.4.03", Text_x + 5, Text_y + 50, mPaint2);
+//                    break;
+//                case (3):
+//                    // 设置日期绘制位置
+//                    c.drawText("11:40", Text_x, Text_y, mPaint1);
+//                    c.drawText("2017.4.04", Text_x + 5, Text_y + 50, mPaint2);
+//                    break;
+//                case (4):
+//                    // 设置日期绘制位置
+//                    c.drawText("13:20", Text_x, Text_y, mPaint1);
+//                    c.drawText("2017.4.04", Text_x + 5, Text_y + 50, mPaint2);
+//                    break;
+//                case (5):
+//                    // 设置日期绘制位置
+//                    c.drawText("22:40", Text_x, Text_y, mPaint1);
+//                    c.drawText("2017.4.04", Text_x + 5, Text_y + 50, mPaint2);
+//                    break;
+//                default:c.drawText("已签收", Text_x, Text_y, mPaint1);
+//            }
         }
     }
 }
