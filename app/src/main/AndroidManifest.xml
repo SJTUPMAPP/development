@@ -20,6 +20,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:persistableMode="persistAcrossReboots"
             android:name=".homepage"
             android:label="@string/title_activity_homepage" />
     </application>
