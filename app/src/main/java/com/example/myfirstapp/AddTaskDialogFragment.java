@@ -71,6 +71,7 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
         spinner_nexttask = view.findViewById(R.id.spinner_nexttask);
 
         //数据
+        // TODO: 29/11/2017 set default choice to "None" 
         prevtask_data_list = new ArrayList<String>();
         prevtask_data_list = Tact.getTaskNameList();
         prevtask_data_list.add("NONE");
@@ -123,6 +124,7 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
                     task.row = TaskAct.findPrevRow(task.prevTask) + 1;
                     if(TaskAct.findNextRow(task.nextTask) - TaskAct.findPrevRow(task.prevTask) == 1) {
                         TaskAct.LowerRow(task.level,TaskAct.findNextRow(task.nextTask));
+                        // TODO: 04/11/2017 modify column and row algorithm 
                         task.column = 1;
                     }
                     else{

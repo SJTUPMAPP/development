@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.ArrayList;
+
 import static android.support.constraint.ConstraintLayout.LayoutParams.TOP;
 
 
@@ -26,23 +28,58 @@ public class Project extends Fragment implements AddTaskDialogFragment.addTaskDi
         return fragment;
     }
 
-    private FloatingActionButton addBtn;
+    private ArrayList<Task> existingTasks;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_project, null);
+        FloatingActionButton addBtn;
         addBtn = view.findViewById(R.id.btn_add);
         addBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 showAddTaskDialog();
             }
         });
-        ConstraintLayout conLayout = view.findViewById(R.id.fragment_project_layout);
-        final DrawView drawview = new DrawView(getContext(),100,100,100,200);
-        view.setMinimumHeight(500);
-        view.setMinimumWidth(300);
-        view.invalidate();
-        conLayout.addView(drawview);
+        TaskActivity Tact = new TaskActivity(getActivity());
+        existingTasks = Tact.getButtonList();
+        Resources resources = this.getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        int width = dm.widthPixels;
+        int height = dm.heightPixels;
+        int gap = width/10;
+        String name; int row, column, mId;
+
+        for (int i = 0; i < existingTasks.size(); i++){
+            ConstraintLayout conLayout = view.findViewById(R.id.fragment_project_layout);
+            name = existingTasks.get(i).name;
+            row = existingTasks.get(i).row;
+            column = existingTasks.get(i).column;
+            Button  mButton = new Button(getContext());
+            mButton.setText(name);
+//            mButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    DialogFragment newFragment = new AddTaskDialogFragment();
+//                    newFragment.show(getChildFragmentManager(),"dialog_fragment");
+//                }
+//            });
+            mId = conLayout.generateViewId();
+            mButton.setId(mId);
+            conLayout.addView(mButton);
+            ConstraintSet set = new ConstraintSet();
+            set.clone(conLayout);
+            set.connect(mId, TOP, R.id.fragment_project_layout, TOP, height/6*row+gap*row );
+            set.connect(mId, ConstraintSet.START, R.id.fragment_project_layout, ConstraintSet.START, width/4*column+gap*column);
+            set.applyTo(conLayout);
+        }
+
+//        final DrawView drawview = new DrawView(getContext(),100,100,100,200);
+//        view.setMinimumHeight(500);
+//        view.setMinimumWidth(300);
+//        view.invalidate();
+//        conLayout.addView(drawview);
         return view;
     }
 
@@ -70,29 +107,21 @@ public class Project extends Fragment implements AddTaskDialogFragment.addTaskDi
         mButton.setId(mId);
         constraintLayout.addView(mButton);
 
+        ConstraintSet set = new ConstraintSet();
+        set.clone(constraintLayout);
         Resources resources = this.getResources();
         DisplayMetrics dm = resources.getDisplayMetrics();
         float density = dm.density;
         int width = dm.widthPixels;
         int height = dm.heightPixels;
         int gap = width/10;
-        //int width = constraintLayout.getWidth();
-        //int height = constraintLayout.getHeight();
-        ConstraintSet set = new ConstraintSet();
-        // You may want (optional) to start with the existing constraint,
-        // so uncomment this.
-        set.clone(constraintLayout);
-        // Resize to 100dp
-        // center horizontally in the container
         set.connect(mId, TOP, R.id.fragment_project_layout, TOP, height/6*row+gap*row );
-        // pin to the bottom of the container
         set.connect(mId, ConstraintSet.START, R.id.fragment_project_layout, ConstraintSet.START, width/4*column+gap*column);
-        // Apply the changes
         set.applyTo(constraintLayout);
-        //RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)mButton.getLayoutParams();
-        //params.topMargin = height/6*row;
-        //params.leftMargin = width/4*column;
-        //mButton.setLayoutParams(params);
+
+        // TODO: 04/11/2017 get task lists and related row and column from the database
+        updateAllViews();
+
         Log.e("",row+"row");
         Log.e("", column+"column");
         Log.e("", mId+"mId");
@@ -101,6 +130,10 @@ public class Project extends Fragment implements AddTaskDialogFragment.addTaskDi
     @Override
     public void onDialogNegativeClick(AddTaskDialogFragment dialog) {
         // User touched the dialog's negative button
+
+    }
+
+    public void updateAllViews() {
 
     }
 

@@ -35,7 +35,7 @@ public class Dashboard_Timeline extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup main_content,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_dashboard_timeline, main_content, false);
-        TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+        TextView textView = rootView.findViewById(R.id.section_label);
         textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
         initData();
         // 绑定数据到RecyclerView
@@ -43,11 +43,8 @@ public class Dashboard_Timeline extends Fragment {
         //使用线性布局
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         Rv.setLayoutManager(layoutManager);
-        Rv.setHasFixedSize(true);
-
         //用自定义分割线类设置分割线
         Rv.addItemDecoration(new DividerItemDecoration(getActivity()));
-
         //为ListView绑定适配器
         myAdapter = new MyAdapter(getActivity(),listItem);
         Rv.setAdapter(myAdapter);
@@ -68,38 +65,6 @@ public class Dashboard_Timeline extends Fragment {
             map.put("ItemText", tasklist.get(i).owner);
             listItem.add(map);
         }
-//        HashMap<String, Object> map1 = new HashMap<String, Object>();
-//        HashMap<String, Object> map2 = new HashMap<String, Object>();
-//        HashMap<String, Object> map3 = new HashMap<String, Object>();
-//        HashMap<String, Object> map4 = new HashMap<String, Object>();
-//        HashMap<String, Object> map5 = new HashMap<String, Object>();
-//        HashMap<String, Object> map6 = new HashMap<String, Object>();
-//        map1.put("ItemTitle", tasklist.get(0).name);
-//        map1.put("ItemText", String.valueOf(cnt));
-//        listItem.add(map1);
-//
-//        map2.put("ItemTitle", tasklist.get(1).name);
-//        map2.put("ItemText", "等待中转");
-//        listItem.add(map2);
-//
-//        map3.put("ItemTitle", "国际顺丰转件中");
-//        map3.put("ItemText", "下一站中国");
-//        listItem.add(map3);
-//
-//        map4.put("ItemTitle", "中国顺丰已收入");
-//        map4.put("ItemText", "下一站广州华南理工大学");
-//        listItem.add(map4);
-//
-//        map5.put("ItemTitle", "中国顺丰派件中");
-//        map5.put("ItemText", "等待派件");
-//        listItem.add(map5);
-//
-//        map6.put("ItemTitle", "华南理工大学已签收");
-//        map6.put("ItemText", "收件人:Carson");
-//        listItem.add(map6);
-//
-
-
     }
 
 
