@@ -35,47 +35,64 @@ public class EmployeeActivity {
         db.close(); //Closing database connection
     }
 
-    public void delete(int task_Id) {
+    public void delete(int employee_Id) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         // It's a good practice to use parameter ?, instead of concatenate string
-        db.delete(Employee.TABLE, Employee.KEY_ID + "= ?", new String[] { String.valueOf(task_Id) });
+        db.delete(Employee.TABLE, Employee.KEY_ID + "= ?", new String[] { String.valueOf(employee_Id) });
         db.close(); // Closing database connection
     }
 
 
-    public void update(Employee task){
+    public void update(Employee employee){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(Employee.Employee_Name, task.name);
+        values.put(Employee.Employee_Name, employee.name);
 
         // It's a good practice to use parameter ?, instead of concatenate string
-        db.update(Employee.TABLE, values, Employee.Employee_Name + "= ?", new String[] {task.name});
+        db.update(Employee.TABLE, values, Employee.Employee_Name + "= ?", new String[] {employee.name});
         db.close(); // Closing database connection
 
     }
 
-    public void updateRow(Employee task){
+    public void updateEmployee(Employee employee){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(Employee.X, task.row);
+        values.put(Employee.Employee_Name, employee.name);
+        values.put(Employee.Title, employee.title);
+        values.put(Employee.Email, employee.email);
+        values.put(Employee.Phone, employee.phone);
+        values.put(Employee.Department, employee.department);
+        values.put(Employee.Team, employee.team);
 
         // It's a good practice to use parameter ?, instead of concatenate string
-        db.update(Employee.TABLE, values, Employee.Employee_Name + "= ?", new String[] {task.name});
+        db.update(Employee.TABLE, values, Employee.KEY_ID + "= ?", new String[] {String.valueOf(employee.empolyee_ID)});
+        db.close(); // Closing database connection
+    }
+
+
+    public void updateRow(Employee employee){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Employee.X, employee.row);
+
+        // It's a good practice to use parameter ?, instead of concatenate string
+        db.update(Employee.TABLE, values, Employee.Employee_Name + "= ?", new String[] {employee.name});
         db.close(); // Closing database connection
 
     }
 
-    public void updateLocation(Employee task){
+    public void updateLocation(Employee employee){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(Employee.X, task.row);
-        values.put(Employee.Y, task.column);
+        values.put(Employee.X, employee.row);
+        values.put(Employee.Y, employee.column);
 
         // It's a good practice to use parameter ?, instead of concatenate string
-        db.update(Employee.TABLE, values, Employee.Employee_Name + "= ?", new String[] {task.name});
+        db.update(Employee.TABLE, values, Employee.Employee_Name + "= ?", new String[] {employee.name});
         db.close(); // Closing database connection
     }
 
@@ -129,7 +146,7 @@ public class EmployeeActivity {
 
     }
 
-    //Find the row of previous task
+    //Find the row of previous employee
     public int findPrevRow(String prevEmployee){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         int row = 0;
@@ -143,7 +160,7 @@ public class EmployeeActivity {
         return row;
     }
 
-    //Find the row of next task
+    //Find the row of next employee
     public int findNextRow(String nextEmployee){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         int row = 0;
@@ -200,54 +217,72 @@ public class EmployeeActivity {
                 Employee.Employee_Name+
                 " FROM " + Employee.TABLE;
 
-        ArrayList<String> taskList = new ArrayList<String>();
+        ArrayList<String> employeeList = new ArrayList<String>();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if(cursor.moveToFirst()){
             do{
-                String task;
-                task = cursor.getString(cursor.getColumnIndex(Employee.Employee_Name));
-                taskList.add(task);
+                String employee;
+                employee = cursor.getString(cursor.getColumnIndex(Employee.Employee_Name));
+                employeeList.add(employee);
 
             }while(cursor.moveToNext());
         }
 
         cursor.close();
         db.close();
-        return taskList;
+        return employeeList;
     }
 
-//    public ArrayList<Employee> getActionList(){
-//        SQLiteDatabase db = dbHelper.getReadableDatabase();
-//        String selectQuery = "SELECT " +
-//                Employee.KEY_ID + "," +
-//                Employee.Employee_Name +"," +
-//                Employee.Owner1 + "," +
-//                Employee.StartDate1 +"," +
-//                Employee.EndDate1 + ","+
-//                Employee.Status +","+
-//                Employee.Comment +
-//                " FROM " +Employee.TABLE;
-//        ArrayList<Employee> taskList = new ArrayList<Employee>();
-//
-//        Cursor cursor = db.rawQuery(selectQuery,null);
+    public ArrayList<Employee> getEmployeesByDepartmentAndTeam(String dep, String team){
+        SQLiteDatabase db =dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + Employee.TABLE + " WHERE Department = ? AND Team = ?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{dep, team});
+        ArrayList<Employee> employee_List = new ArrayList<Employee>();
+
+        if(cursor.moveToFirst()){
+            do{
+                Employee newemployee = new Employee();
+                newemployee.empolyee_ID = cursor.getInt(cursor.getColumnIndex(Employee.KEY_ID));
+                newemployee.name = cursor.getString(cursor.getColumnIndex(Employee.Employee_Name));
+                newemployee.phone = cursor.getString(cursor.getColumnIndex(Employee.Phone));
+                newemployee.title = cursor.getString(cursor.getColumnIndex(Employee.Title));
+                newemployee.email = cursor.getString(cursor.getColumnIndex(Employee.Email));
+                employee_List.add(newemployee);
+
+            }while(cursor.moveToNext());
+        }
+        return employee_List;
+    }
+
+//    public ArrayList<Employee> getEmployeesByOwnerName(String name){
+//        SQLiteDatabase db =dbHelper.getReadableDatabase();
+//        String selectQuery = "SELECT * FROM " + Employee.TABLE + " WHERE EmployeeName = ?";
+//        Cursor cursor = db.rawQuery(selectQuery, new String[]{name});
+//        ArrayList<Employee> employee_List = new ArrayList<Employee>();
 //
 //        if(cursor.moveToFirst()){
 //            do{
-//                Employee person = new Employee();
-//                person.task_ID = cursor.getInt(cursor.getColumnIndex(Employee.KEY_ID));
-//                person.name = cursor.getString(cursor.getColumnIndex(Employee.Employee_Name));
-//                person.owner = cursor.getString(cursor.getColumnIndex(Employee.Owner1));
-//                person.startDate = cursor.getString(cursor.getColumnIndex(Employee.StartDate1));
-//                person.endDate = cursor.getString(cursor.getColumnIndex(Employee.EndDate1));
-//                person.status = cursor.getString(cursor.getColumnIndex(Employee.Status));
-//                person.comment = cursor.getString(cursor.getColumnIndex(Employee.Comment));
+//                Employee newemployee = new Employee();
+//                newemployee.employee_ID = cursor.getInt(cursor.getColumnIndex(Employee.KEY_ID));
+//                newemployee.name = cursor.getString(cursor.getColumnIndex(Employee.Employee_Name));
+//                newemployee.prevEmployee = cursor.getString(cursor.getColumnIndex(Employee.Prev_Employee));
+//                newemployee.nextEmployee = cursor.getString(cursor.getColumnIndex(Employee.Next_Employee));
+//                newemployee.mainEmployee = cursor.getString(cursor.getColumnIndex(Employee.Main_Employee));
+//                newemployee.row = cursor.getInt(cursor.getColumnIndex(Employee.X));
+//                newemployee.column = cursor.getInt(cursor.getColumnIndex(Employee.Y));
+//                newemployee.rank = cursor.getInt(cursor.getColumnIndex(Employee.Rank));
+//                newemployee.level = cursor.getInt(cursor.getColumnIndex(Employee.Level));
+//                newemployee.owner = cursor.getString(cursor.getColumnIndex(Employee.Owner1));
+//                newemployee.status = cursor.getString(cursor.getColumnIndex(Employee.Status));
+//                newemployee.startDate = cursor.getString(cursor.getColumnIndex(Employee.StartDate1));
+//                newemployee.endDate = cursor.getString(cursor.getColumnIndex(Employee.EndDate1));
+//                newemployee.comment = cursor.getString(cursor.getColumnIndex(Employee.Comment));
+//                employee_List.add(newemployee);
 //
 //            }while(cursor.moveToNext());
 //        }
-//        cursor.close();
-//        db.close();
-//        return taskList;
+//        return employee_List;
 //    }
 
 

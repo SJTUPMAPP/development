@@ -47,17 +47,17 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         // 此处设置了两只分别设置 时分 & 年月
         mPaint1 = new Paint();
         mPaint1.setColor(Color.BLUE);
-        mPaint1.setTextSize(60);
+        mPaint1.setTextSize(50);
 
         mPaint2 = new Paint();
         mPaint2.setColor(Color.BLUE);
-        mPaint2.setTextSize(30);
+        mPaint2.setTextSize(50);
 
         // 赋值ItemView的左偏移长度为200
         itemView_leftinterval = 300;
 
         // 赋值ItemView的上偏移长度为50
-        itemView_topinterval = 50;
+        itemView_topinterval = 30;
 
         // 赋值轴点圆的半径为10
         circle_radius = 10;
@@ -148,10 +148,11 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
             // 根据Item位置设置时间文本
 
 
+            String year = tasklist.get(i).endDate.substring(0,4);
+            String date = tasklist.get(i).endDate.substring(5,10);
 
-
-            c.drawText(tasklist.get(i).name, Text_x, Text_y, mPaint1);
-            c.drawText(tasklist.get(i).name, Text_x + 5, Text_y + 50, mPaint2);
+            c.drawText(year, Text_x, Text_y, mPaint1);
+            c.drawText(date, Text_x + 5, Text_y + 50, mPaint2);
 
         }
     }

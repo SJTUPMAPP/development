@@ -52,6 +52,22 @@ public class TaskActivity {
 
     }
 
+    public void updateTask(Task task){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Task.Task_Name, task.name);
+        values.put(Task.Owner1, task.owner);
+        values.put(Task.StartDate1, task.startDate);
+        values.put(Task.EndDate1, task.endDate);
+        values.put(Task.Status, task.status);
+        values.put(Task.Comment, task.comment);
+
+        // It's a good practice to use parameter ?, instead of concatenate string
+        db.update(Task.TABLE, values, Task.KEY_ID + "= ?", new String[] {String.valueOf(task.task_ID)});
+        db.close(); // Closing database connection
+    }
+
     public void updateRow(Task task){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -306,7 +322,7 @@ public class TaskActivity {
 
    public ArrayList<Task> getTasksByOwnerName(String name){
        SQLiteDatabase db =dbHelper.getReadableDatabase();
-       String selectQuery = "SELECT * FROM " + Task.TABLE + " WHERE TaskName = ?";
+       String selectQuery = "SELECT * FROM " + Task.TABLE + " WHERE Owner1 = ?";
        Cursor cursor = db.rawQuery(selectQuery, new String[]{name});
        ArrayList<Task> task_List = new ArrayList<Task>();
 

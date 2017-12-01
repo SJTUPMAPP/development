@@ -163,10 +163,10 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
                                               int monthOfYear, int dayOfMonth) {
 
                             if (v.getId() == R.id.btn_start_date) {
-                                startDatePicker.setText(year+ "-"+ (monthOfYear + 1) + "-" + dayOfMonth);
+                                startDatePicker.setText(year+ "-"+ String.format("%02d",(monthOfYear + 1)) + "-" + String.format("%02d",dayOfMonth));
                             }
                             else {
-                                endDatePicker.setText(year+ "-" +(monthOfYear + 1) + "-" +dayOfMonth);
+                                endDatePicker.setText(year+ "-" +String.format("%02d",(monthOfYear + 1)) + "-" + String.format("%02d",dayOfMonth));
                             }
 
 

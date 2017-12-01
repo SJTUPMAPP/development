@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,8 +34,8 @@ public class Dashboard_Timeline extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup main_content,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_dashboard_timeline, main_content, false);
-        TextView textView = rootView.findViewById(R.id.section_label);
-        textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+        //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+        //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
         initData();
         // 绑定数据到RecyclerView
         Rv = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
@@ -45,6 +44,7 @@ public class Dashboard_Timeline extends Fragment {
         Rv.setLayoutManager(layoutManager);
         //用自定义分割线类设置分割线
         Rv.addItemDecoration(new DividerItemDecoration(getActivity()));
+
         //为ListView绑定适配器
         myAdapter = new MyAdapter(getActivity(),listItem);
         Rv.setAdapter(myAdapter);
