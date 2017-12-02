@@ -96,26 +96,35 @@ public class TaskActivity {
 
     public Task getTaskById(int Id){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT " +
-                Task.KEY_ID + "," +
-                Task.Task_Name +
-                " FROM " + Task.TABLE +
+        String selectQuery = "SELECT * FROM " + Task.TABLE +
                 " WHERE " + Task.KEY_ID + "=?";
-        Task task = new Task();
+        Task newtask = new Task();
         Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(Id)});
+
 
         if(cursor.moveToFirst()){
             do{
-                task.task_ID =cursor.getInt(cursor.getColumnIndex(Task.KEY_ID));
-                task.name =cursor.getString(cursor.getColumnIndex(Task.Task_Name));
 
-            } while (cursor.moveToNext());
+                newtask.task_ID = cursor.getInt(cursor.getColumnIndex(Task.KEY_ID));
+                newtask.name = cursor.getString(cursor.getColumnIndex(Task.Task_Name));
+                newtask.prevTask = cursor.getString(cursor.getColumnIndex(Task.Prev_Task));
+                newtask.nextTask = cursor.getString(cursor.getColumnIndex(Task.Next_Task));
+                newtask.mainTask = cursor.getString(cursor.getColumnIndex(Task.Main_Task));
+                newtask.row = cursor.getInt(cursor.getColumnIndex(Task.X));
+                newtask.column = cursor.getInt(cursor.getColumnIndex(Task.Y));
+                newtask.rank = cursor.getInt(cursor.getColumnIndex(Task.Rank));
+                newtask.level = cursor.getInt(cursor.getColumnIndex(Task.Level));
+                newtask.owner = cursor.getString(cursor.getColumnIndex(Task.Owner1));
+                newtask.status = cursor.getString(cursor.getColumnIndex(Task.Status));
+                newtask.startDate = cursor.getString(cursor.getColumnIndex(Task.StartDate1));
+                newtask.endDate = cursor.getString(cursor.getColumnIndex(Task.EndDate1));
+                newtask.percentage = cursor.getInt(cursor.getColumnIndex(Task.Percentage));
+                newtask.comment = cursor.getString(cursor.getColumnIndex(Task.Comment));
+            }while(cursor.moveToNext());
         }
-        cursor.close();
-        db.close();
-        return task;
-
+        return newtask;
     }
+
     public void updatePrevTask(String prevTask, String task){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -271,15 +280,7 @@ public class TaskActivity {
 
     public ArrayList<Task> getActionList(){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT " +
-                Task.KEY_ID + "," +
-                Task.Task_Name +"," +
-                Task.Owner1 + "," +
-                Task.StartDate1 +"," +
-                Task.EndDate1 + ","+
-                Task.Status +","+
-                Task.Comment +
-                " FROM " +Task.TABLE;
+        String selectQuery = "SELECT * FROM " +Task.TABLE;
         ArrayList<Task> taskList = new ArrayList<Task>();
 
         Cursor cursor = db.rawQuery(selectQuery,null);
