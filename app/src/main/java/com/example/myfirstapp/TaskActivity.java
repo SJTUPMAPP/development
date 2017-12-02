@@ -119,7 +119,7 @@ public class TaskActivity {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(Task.Next_Task, task);
+        values.put(Task.Next_Task, task + "-");
 
         // It's a good practice to use parameter ?, instead of concatenate string
         db.update(Task.TABLE, values, Task.Task_Name + "= ?", new String[] {prevTask});
@@ -131,7 +131,7 @@ public class TaskActivity {
         Task newtask = getTaskByName(prevTask);
         ContentValues values = new ContentValues();
 
-        values.put(Task.Next_Task, newtask.nextTask + "-" +task);
+        values.put(Task.Next_Task, newtask.nextTask + task + "-");
 
         // It's a good practice to use parameter ?, instead of concatenate string
         db.update(Task.TABLE, values, Task.Task_Name + "= ?", new String[] {prevTask});
