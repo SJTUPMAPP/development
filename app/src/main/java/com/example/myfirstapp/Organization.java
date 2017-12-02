@@ -1,10 +1,6 @@
 package com.example.myfirstapp;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -12,8 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Spinner;
 
-import static android.support.constraint.ConstraintLayout.LayoutParams.BOTTOM;
+import java.util.List;
 
 
 public class Organization extends Fragment implements AddPersonDialogFragment.addPersonDialogListener{
@@ -52,16 +49,27 @@ public class Organization extends Fragment implements AddPersonDialogFragment.ad
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_organization, null);
+        final View view = inflater.inflate(R.layout.fragment_organization, null);
         addBtn = view.findViewById(R.id.btn_add_person);
         addBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 showAddPersonDialog();
             }
         });
-
+        Button findPersonButton = view.findViewById(R.id.btn_find_person);
+        findPersonButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                EmployeeActivity EAct = new EmployeeActivity(getActivity());
+                List listOfEmp;
+                Spinner depSpinner = view.findViewById(R.id.org_spinner_departments);
+                String departments = depSpinner.getSelectedItem().toString();
+                Spinner teamSpinner = view.findViewById(R.id.org_spinner_teams);
+                String teams = teamSpinner.getSelectedItem().toString();
+                listOfEmp =  EAct.getEmployeesByDepartmentAndTeam(departments,teams);
+                //// TODO: 02/12/2017 Render people onto the page 
+            }
+        });
         return view;
-
     }
 
     public void showAddPersonDialog() {
@@ -73,26 +81,7 @@ public class Organization extends Fragment implements AddPersonDialogFragment.ad
     @Override
     public void onDialogPositiveClick(String name) {
         // User touched the dialog's positive button
-        ConstraintLayout constraintLayout = (ConstraintLayout) getView().findViewById(R.id.fragment_organization_layout);
-        Button mButton = new Button(getContext());
-        mButton.setText(name);
-        int mId = constraintLayout.generateViewId();
-        mButton.setId(mId);
-        constraintLayout.addView(mButton);
 
-        int width = constraintLayout.getWidth();
-        int height = constraintLayout.getHeight();
-        ConstraintSet set = new ConstraintSet();
-        // You may want (optional) to start with the existing constraint,
-        // so uncomment this.
-        set.clone(constraintLayout);
-        // Resize to 100dp
-        // center horizontally in the container
-        set.centerHorizontally(mId, R.id.fragment_organization_layout);
-        // pin to the bottom of the container
-        set.connect(mId, BOTTOM, R.id.fragment_organization_layout, BOTTOM, height/2);
-        // Apply the changes
-        set.applyTo(constraintLayout);
     }
 
     @Override

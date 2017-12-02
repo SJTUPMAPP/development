@@ -25,32 +25,57 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Team"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="91dp" />
+        android:layout_marginLeft="30dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/org_spinner_teams"
+        android:layout_marginTop="7dp" />
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="495dp"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="8dp">
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="74dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Department"
+        android:layout_marginLeft="30dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/org_spinner_departments"
+        android:layout_marginTop="7dp" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Department"
-            tools:layout_editor_absoluteX="42dp"
-            tools:layout_editor_absoluteY="45dp" />
+    <Spinner
+        android:id="@+id/org_spinner_departments"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:entries="@array/departments"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="30dp"
+        app:layout_constraintRight_toRightOf="parent" />
 
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="64dp" />
-    </LinearLayout>
+    <Spinner
+        android:id="@+id/org_spinner_teams"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:entries="@array/teams"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/org_spinner_departments"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/org_spinner_departments" />
+
+    <Button
+        android:id="@+id/btn_find_person"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="100dp"
+        android:text="Find People!"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
