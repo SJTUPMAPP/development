@@ -74,11 +74,11 @@ public class Organization extends Fragment implements AddPersonDialogFragment.ad
                 Spinner teamSpinner = view.findViewById(R.id.org_spinner_teams);
                 String teams = teamSpinner.getSelectedItem().toString();
                 listOfEmp =  EAct.getEmployeesByDepartmentAndTeam(departments,teams);
-                //// TODO: 02/12/2017 Render people onto the page
                 updateAllButtons(view, listOfEmp);
             }
         });
         return view;
+
     }
 
     public void updateAllButtons(View view, ArrayList<Employee> employeeList) {

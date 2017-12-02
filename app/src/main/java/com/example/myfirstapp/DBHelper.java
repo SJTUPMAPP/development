@@ -49,6 +49,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 + Task.AlterTime2 + " TEXT, "
                 + Task.StartDate3 + " TEXT, "
                 + Task.EndDate3 + " TEXT, "
+                + Task.Percentage + " INTEGER, "
                 + Task.Comment + " TEXT )";
 
         db.execSQL(CREATE_TABLE_TASK);

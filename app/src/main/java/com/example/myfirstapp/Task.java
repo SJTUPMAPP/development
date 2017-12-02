@@ -31,6 +31,7 @@ public class Task {
     public static final String AlterTime2 = "AlterTime2";
     public static final String StartDate3 = "StartDate3";
     public static final String EndDate3 = "EndDate3";
+    public static final String Percentage = "Percentage";
     public static final String Comment = "Comment";
 
 
@@ -52,6 +53,7 @@ public class Task {
     public int rank;
     public String status;
     public String comment;
+    public int percentage;
 
 
 }

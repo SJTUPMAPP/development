@@ -23,9 +23,9 @@ public class TaskActivity {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String insertQuery = "INSERT INTO " + Task.TABLE
                 + " (" +Task.Task_Name +"," + Task.Owner1 +","+ Task.CreateTime + "," + Task.StartDate1 +"," +Task.EndDate1+ "," +Task.Prev_Task
-                +"," + Task.Next_Task + "," + Task.Main_Task + "," + Task.Level +") VALUES ('"
+                +"," + Task.Next_Task + "," + Task.Main_Task + "," + Task.Level +  "," +Task.Status + "," + Task.Percentage + ") VALUES ('"
                 + newtask.name + "','"+ newtask.owner + "', datetime('now', 'localtime'), '"+ newtask.startDate +"','"+ newtask.endDate +"','"+ newtask.prevTask +"', '"
-                + newtask.nextTask +"', '"+ newtask.mainTask+"',"+ newtask.level +")";
+                + newtask.nextTask +"', '"+ newtask.mainTask+"',"+ newtask.level +", 'ON', 0)";
 
         //Inserting Row
         db.execSQL(insertQuery);
@@ -61,6 +61,7 @@ public class TaskActivity {
         values.put(Task.StartDate1, task.startDate);
         values.put(Task.EndDate1, task.endDate);
         values.put(Task.Status, task.status);
+        values.put(Task.Percentage, task.percentage);
         values.put(Task.Comment, task.comment);
 
         // It's a good practice to use parameter ?, instead of concatenate string
@@ -292,6 +293,7 @@ public class TaskActivity {
                 newtask.startDate = cursor.getString(cursor.getColumnIndex(Task.StartDate1));
                 newtask.endDate = cursor.getString(cursor.getColumnIndex(Task.EndDate1));
                 newtask.status = cursor.getString(cursor.getColumnIndex(Task.Status));
+                newtask.percentage = cursor.getInt(cursor.getColumnIndex(Task.Percentage));
                 newtask.comment = cursor.getString(cursor.getColumnIndex(Task.Comment));
                 taskList.add(newtask);
 
@@ -350,6 +352,7 @@ public class TaskActivity {
                 newtask.status = cursor.getString(cursor.getColumnIndex(Task.Status));
                 newtask.startDate = cursor.getString(cursor.getColumnIndex(Task.StartDate1));
                 newtask.endDate = cursor.getString(cursor.getColumnIndex(Task.EndDate1));
+                newtask.percentage = cursor.getInt(cursor.getColumnIndex(Task.Percentage));
                 newtask.comment = cursor.getString(cursor.getColumnIndex(Task.Comment));
             }while(cursor.moveToNext());
         }
@@ -378,6 +381,7 @@ public class TaskActivity {
                 newtask.status = cursor.getString(cursor.getColumnIndex(Task.Status));
                 newtask.startDate = cursor.getString(cursor.getColumnIndex(Task.StartDate1));
                 newtask.endDate = cursor.getString(cursor.getColumnIndex(Task.EndDate1));
+                newtask.percentage = cursor.getInt(cursor.getColumnIndex(Task.Percentage));
                 newtask.comment = cursor.getString(cursor.getColumnIndex(Task.Comment));
                 task_List.add(newtask);
 
@@ -408,6 +412,7 @@ public class TaskActivity {
                newtask.status = cursor.getString(cursor.getColumnIndex(Task.Status));
                newtask.startDate = cursor.getString(cursor.getColumnIndex(Task.StartDate1));
                newtask.endDate = cursor.getString(cursor.getColumnIndex(Task.EndDate1));
+               newtask.percentage = cursor.getInt(cursor.getColumnIndex(Task.Percentage));
                newtask.comment = cursor.getString(cursor.getColumnIndex(Task.Comment));
                task_List.add(newtask);
 
@@ -436,6 +441,7 @@ public class TaskActivity {
                 newtask.status = cursor.getString(cursor.getColumnIndex(Task.Status));
                 newtask.startDate = cursor.getString(cursor.getColumnIndex(Task.StartDate1));
                 newtask.endDate = cursor.getString(cursor.getColumnIndex(Task.EndDate1));
+                newtask.percentage = cursor.getInt(cursor.getColumnIndex(Task.Percentage));
                 newtask.comment = cursor.getString(cursor.getColumnIndex(Task.Comment));
             }while(cursor.moveToNext());
         }
@@ -466,6 +472,7 @@ public class TaskActivity {
                 newtask.status = cursor.getString(cursor.getColumnIndex(Task.Status));
                 newtask.startDate = cursor.getString(cursor.getColumnIndex(Task.StartDate1));
                 newtask.endDate = cursor.getString(cursor.getColumnIndex(Task.EndDate1));
+                newtask.percentage = cursor.getInt(cursor.getColumnIndex(Task.Percentage));
                 newtask.comment = cursor.getString(cursor.getColumnIndex(Task.Comment));
                 task_List.add(newtask);
 
@@ -510,6 +517,7 @@ public class TaskActivity {
                 newtask.status = cursor.getString(cursor.getColumnIndex(Task.Status));
                 newtask.startDate = cursor.getString(cursor.getColumnIndex(Task.StartDate1));
                 newtask.endDate = cursor.getString(cursor.getColumnIndex(Task.EndDate1));
+                newtask.percentage = cursor.getInt(cursor.getColumnIndex(Task.Percentage));
                 newtask.comment = cursor.getString(cursor.getColumnIndex(Task.Comment));
                 task_List.add(newtask);
 
@@ -542,6 +550,7 @@ public class TaskActivity {
                 newtask.status = cursor.getString(cursor.getColumnIndex(Task.Status));
                 newtask.startDate = cursor.getString(cursor.getColumnIndex(Task.StartDate1));
                 newtask.endDate = cursor.getString(cursor.getColumnIndex(Task.EndDate1));
+                newtask.percentage = cursor.getInt(cursor.getColumnIndex(Task.Percentage));
                 newtask.comment = cursor.getString(cursor.getColumnIndex(Task.Comment));
                 task_List.add(newtask);
 
