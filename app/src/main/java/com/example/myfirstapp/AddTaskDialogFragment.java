@@ -113,28 +113,54 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
                 task.owner = (String)spinner_owner.getSelectedItem();
                 task.startDate = startDatePicker.getText().toString();
                 task.endDate = endDatePicker.getText().toString();
-                task.mainTask = "AAA";
+                if(task.prevTask == "NONE")
+                    task.mainTask = task.name;
+                else task.mainTask = TaskAct.getTaskByName(task.prevTask).mainTask;
                 task.level = 0;
                 TaskAct.insert(task);
+
+                if(task.nextTask != "NONE"){
+                    TaskAct.updateNextTask(task.nextTask,task.name);
+                }
+
                 if(task.prevTask == "NONE") {
                     task.row = 1;
-                    task.column = TaskAct.findMaxColumn(task.level,task.row)+1;
+                    //task.column = TaskAct.findMaxColumn(task.level,task.row)+1;
+                    task.column = TaskAct.findMaxColumn(task.level)+1;
                 }
+
                 else {
                     task.row = TaskAct.findPrevRow(task.prevTask) + 1;
-                    if(TaskAct.findNextRow(task.nextTask) - TaskAct.findPrevRow(task.prevTask) == 1) {
-                        TaskAct.LowerRow(task.level,TaskAct.findNextRow(task.nextTask));
-                        // TODO: 04/11/2017 modify column and row algorithm 
-                        task.column = 1;
+                    TaskAct.updatePrevTask(task.prevTask, task.name);
+
+                    //insert as the last node
+                    if (task.nextTask == "NONE") {
+                        int maxColumn = TaskAct.findMaxColumn(task.level, task.row) + 1;
+                        if (maxColumn < TaskAct.findPrevColumn(task.prevTask))
+                            maxColumn = TaskAct.findPrevColumn(task.prevTask);
+                        task.column = maxColumn;
                     }
-                    else{
-                        task.column = TaskAct.findMaxColumn(task.level,task.row)+1;
+
+                    //insert into two adjacent nodes
+                    else if (TaskAct.findNextRow(task.nextTask) - TaskAct.findPrevRow(task.prevTask) == 1) {
+                        TaskAct.LowerRow(task.level, TaskAct.findNextRow(task.nextTask), task.mainTask);
+                        task.column = TaskAct.findPrevColumn(task.prevTask);
+                    }
+
+                    //insert into two existed nodes, but not adjacent
+                    else if (TaskAct.findNextRow(task.nextTask) - TaskAct.findPrevRow(task.prevTask) > 1) {
+                        task.column = TaskAct.findMaxColumn(task.level, task.row) + 1;
+                    }
+
+                    //insert for connect two nodes with different root
+                    else {
+                        // TODO: 02/12/2017 insert for connect two nodes with different root
+                        task.column = TaskAct.findMaxColumn(task.level, task.row) + 1;
                     }
                 }
 
                 TaskAct.updateLocation(task);
                 mListener.onDialogPositiveClick(task.name, task.row, task.column);
-//                sendResult(0);
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -178,6 +204,7 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
     public interface addTaskDialogListener {
         void onDialogPositiveClick(String name, int row, int column);
         void onDialogNegativeClick(AddTaskDialogFragment dialog);
+
     }
 
     // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener

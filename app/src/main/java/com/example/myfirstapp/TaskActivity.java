@@ -115,7 +115,29 @@ public class TaskActivity {
         return task;
 
     }
+    public void updatePrevTask(String prevTask, String task){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
+        values.put(Task.Next_Task, task);
+
+        // It's a good practice to use parameter ?, instead of concatenate string
+        db.update(Task.TABLE, values, Task.Task_Name + "= ?", new String[] {prevTask});
+        db.close(); // Closing database connection
+
+    }
+
+    public void updateNextTask(String nextTask, String task){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Task.Prev_Task, task);
+
+        // It's a good practice to use parameter ?, instead of concatenate string
+        db.update(Task.TABLE, values, Task.Task_Name + "= ?", new String[] {nextTask});
+        db.close(); // Closing database connection
+
+    }
     //Find the row of previous task
     public int findPrevRow(String prevTask){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -128,6 +150,20 @@ public class TaskActivity {
             }while(cursor.moveToNext());
         }
         return row;
+    }
+
+    //Find the column of previous task
+    public int findPrevColumn(String prevTask){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        int column = 0;
+        String selectQuery = "SELECT " +  Task.Y + " FROM " + Task.TABLE + " WHERE TaskName = ?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{prevTask});
+        if(cursor.moveToFirst()){
+            do{
+                column = cursor.getInt(cursor.getColumnIndex(Task.Y));
+            }while(cursor.moveToNext());
+        }
+        return column;
     }
 
     //Find the row of next task
@@ -161,13 +197,27 @@ public class TaskActivity {
         return maxColumn;
     }
 
+    public int findMaxColumn(int level){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        int maxColumn = 0;
+        int tempColumn;
+        String selectQuery = "SELECT MAX(" + Task.Y + ") FROM " + Task.TABLE + " WHERE Level = ?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(level)});
+        if(cursor.moveToFirst()){
+            do{
+                maxColumn = cursor.getInt(0);
+            }while(cursor.moveToNext());
+        }
+        return maxColumn;
+    }
+
     //Increase the value of the row, when its row >= row
-    public void LowerRow(int level, int row){
+    public void LowerRow(int level, int row, String root){
         Task newtask = new Task();
         int id;
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT " + Task.KEY_ID + "," + Task.X + " FROM " + Task.TABLE + " WHERE Level = ? AND X >= ?";
-        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(level), String.valueOf(row)});
+        String selectQuery = "SELECT " + Task.KEY_ID + "," + Task.X + " FROM " + Task.TABLE + " WHERE Level = ? AND MainTask = ? AND X >= ? ";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(level), root, String.valueOf(row)});
         if(cursor.moveToFirst()){
             do{
                 id = cursor.getInt(cursor.getColumnIndex(Task.KEY_ID));

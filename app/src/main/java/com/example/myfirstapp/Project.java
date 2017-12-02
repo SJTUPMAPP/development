@@ -71,8 +71,10 @@ public class Project extends Fragment implements AddTaskDialogFragment.addTaskDi
         int height = dm.heightPixels;
         int gap = width/10;
         String name; int row, column, mId;
+        ConstraintLayout conLayout = view.findViewById(R.id.fragment_project_layout);
+        conLayout.removeAllViews();
         for (int i = 0; i < existingTasks.size(); i++){
-            ConstraintLayout conLayout = view.findViewById(R.id.fragment_project_layout);
+
             name = existingTasks.get(i).name;
             row = existingTasks.get(i).row;
             column = existingTasks.get(i).column;
