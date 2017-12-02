@@ -5,7 +5,7 @@
     android:scrollbars="vertical">
     <RelativeLayout
         android:layout_width="375dp"
-        android:layout_height="500dp">
+        android:layout_height="700dp">
     <HorizontalScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

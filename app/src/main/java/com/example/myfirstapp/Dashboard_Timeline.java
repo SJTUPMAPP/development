@@ -55,7 +55,7 @@ public class Dashboard_Timeline extends Fragment {
     //        init data for the timeline
     public void initData(){
         listItem = new ArrayList<HashMap<String, Object>>();/*在数组中存放数据*/
-        ArrayList<Task> tasklist = new ArrayList<>();
+        ArrayList<Task> tasklist;
         TaskActivity TaskAct = new TaskActivity(getContext());
         tasklist = TaskAct.getTasksByWeek();
         int cnt = TaskAct.getTasksByWeekCount();

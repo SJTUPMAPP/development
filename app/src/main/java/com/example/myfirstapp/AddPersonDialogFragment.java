@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,8 +22,9 @@ public class AddPersonDialogFragment extends android.support.v4.app.DialogFragme
 
     private Spinner spinner_department;
     private List<String> department_data_list;
-    private ArrayAdapter<String> department_arr_adapter;
 
+    private Spinner spinner_team;
+    private List<String> team_data_list;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -33,13 +33,26 @@ public class AddPersonDialogFragment extends android.support.v4.app.DialogFragme
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_add_person, null);
         builder.setView(view);
+
+
         builder.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                EditText project_name = getDialog().findViewById(R.id.person_name);
-                String name = project_name.getText().toString();
-                mListener.onDialogPositiveClick(name);
-//                sendResult(0);
+                Employee employee = new Employee();
+                EmployeeActivity EmpAct = new EmployeeActivity(getContext());
+                EditText person_name = getDialog().findViewById(R.id.person_name);
+                employee.name = person_name.getText().toString();
+                EditText email = getDialog().findViewById(R.id.person_email);
+                employee.email = email.getText().toString();
+                EditText phone_number = getDialog().findViewById(R.id.person_number);
+                employee.phone = phone_number.getText().toString();
+                spinner_department = getDialog().findViewById(R.id.spinner_department);
+                employee.department = spinner_department.getSelectedItem().toString();
+                spinner_team = getDialog().findViewById(R.id.spinner_team);
+                employee.team = spinner_team.getSelectedItem().toString();
+                EmpAct.insert(employee);
+
+                mListener.onDialogPositiveClick(employee.name);
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -48,24 +61,14 @@ public class AddPersonDialogFragment extends android.support.v4.app.DialogFragme
             }
         });
 
-        spinner_department = (Spinner) view.findViewById(R.id.spinner_department);
-
-        department_data_list = new ArrayList<String>();
-        department_data_list.add("Market");
-        department_data_list.add("Tech");
-        department_data_list.add("Design");
-        department_data_list.add("International");
-
-
-        department_arr_adapter= new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, department_data_list);
-        department_arr_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_department.setAdapter(department_arr_adapter);
-
         return builder.create();
-
     }
 
-
+    public void setArrayAdapter(List array, Spinner sp) {
+        ArrayAdapter<String> arr_adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, array);;
+        arr_adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        sp.setAdapter(arr_adapter);
+    }
 
     public interface addPersonDialogListener {
         void onDialogPositiveClick(String name);

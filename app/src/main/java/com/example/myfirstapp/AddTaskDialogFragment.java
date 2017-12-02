@@ -74,10 +74,10 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
         // TODO: 29/11/2017 set default choice to "None" 
         prevtask_data_list = new ArrayList<String>();
         prevtask_data_list = Tact.getTaskNameList();
-        prevtask_data_list.add("NONE");
+        prevtask_data_list.add(0,"NONE");
         nexttask_data_list = new ArrayList<String>();
         nexttask_data_list = Tact.getTaskNameList();
-        nexttask_data_list.add("NONE");
+        nexttask_data_list.add(0,"NONE");
 
         owner_data_list = new ArrayList<String>();
         owner_data_list.add("Elvis");
@@ -163,10 +163,10 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
                                               int monthOfYear, int dayOfMonth) {
 
                             if (v.getId() == R.id.btn_start_date) {
-                                startDatePicker.setText(year+ "-"+ String.format("%02d",(monthOfYear + 1)) + "-" + String.format("%02d",dayOfMonth));
+                                startDatePicker.setText(year+ "-" + String.format("%02d",(monthOfYear + 1)) + "-" + String.format("%02d",dayOfMonth));
                             }
                             else {
-                                endDatePicker.setText(year+ "-" +String.format("%02d",(monthOfYear + 1)) + "-" + String.format("%02d",dayOfMonth));
+                                endDatePicker.setText(year+ "-" + String.format("%02d",(monthOfYear + 1)) + "-" + String.format("%02d",dayOfMonth));
                             }
 
 

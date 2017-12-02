@@ -15,10 +15,6 @@ import java.util.List;
 import java.util.Map;
 
 
-/**
- * Created by qq on 2017/11/4.
- */
-
 public class Dashboard_ActionList extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private List<Task> tasklist;
@@ -35,10 +31,6 @@ public class Dashboard_ActionList extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView= inflater.inflate(R.layout.fragment_dashboard_actionlist , container, false);
-
-        //ListView lv = (ListView)rootView.findViewById(R.id.data_lv);
-        //获取ListView,并通过Adapter把studentlist的信息显示到ListView
-        //为ListView设置一个适配器,getCount()返回数据个数;getView()为每一行设置一个条目
         TaskActivity TaskAct = new TaskActivity(getContext());
         tasklist = TaskAct.getActionList();
         List<Map<String, Object>> listems = new ArrayList<Map<String, Object>>();
