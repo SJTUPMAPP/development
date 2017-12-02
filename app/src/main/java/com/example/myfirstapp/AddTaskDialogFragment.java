@@ -158,6 +158,7 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
                     //insert for connect two nodes with different root
                     else {
                         // TODO: 02/12/2017 insert for connect two nodes with different root
+                        TaskAct.updatePrevTaskExisted(task.prevTask, task.name);
                         task.column = TaskAct.findMaxColumn(task.level, task.row) + 1;
                     }
                 }
