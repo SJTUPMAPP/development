@@ -59,6 +59,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 + Employee.Title + " TEXT, "
                 + Employee.Office + " TEXT, "
                 + Employee.Department + " TEXT, "
+                + Employee.Team + " TEXT, "
                 + Employee.Email + " TEXT, "
                 + Employee.Mobile + " TEXT, "
                 + Employee.Phone + " TEXT, "

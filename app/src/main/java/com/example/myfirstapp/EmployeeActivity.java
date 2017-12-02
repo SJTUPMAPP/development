@@ -24,11 +24,11 @@ public class EmployeeActivity {
         String insertQuery = "INSERT INTO " + Employee.TABLE + " (" +
                 Employee.Employee_Name +"," + Employee.Title +","+ Employee.Office + "," +
                 Employee.Department +"," + Employee.Team+ "," + Employee.Email +"," +
-                Employee.Mobile + "," + Employee.Phone + ","
+                Employee.Mobile + "," + Employee.Phone
                 +") VALUES ('" +
                 person.name + "','"+ person.title +"','"+ person.office +"','"+
-                person.department +"','"+ person.team +"', '" + person.email +"', '"+
-                person.mobile+"',"+ person.phone +")";
+                person.department +"', '"+ person.team +"', '" + person.email +"', '"+
+                person.mobile+"', '"+ person.phone +"')";
 
         //Inserting Row
         db.execSQL(insertQuery);

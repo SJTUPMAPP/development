@@ -126,6 +126,18 @@ public class TaskActivity {
         db.close(); // Closing database connection
 
     }
+    public void updatePrevTaskExisted(String prevTask, String task){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Task newtask = getTaskByName(prevTask);
+        ContentValues values = new ContentValues();
+
+        values.put(Task.Next_Task, newtask.nextTask + "-" +task);
+
+        // It's a good practice to use parameter ?, instead of concatenate string
+        db.update(Task.TABLE, values, Task.Task_Name + "= ?", new String[] {prevTask});
+        db.close(); // Closing database connection
+
+    }
 
     public void updateNextTask(String nextTask, String task){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -320,8 +332,8 @@ public class TaskActivity {
 
     public Task getTaskByName(String name){
         SQLiteDatabase db =dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT * FROM " + Task.TABLE + " WHERE TaskName = ?";
-        Cursor cursor = db.rawQuery(selectQuery, new String[]{name});
+        String selectQuery = "SELECT * FROM " + Task.TABLE + " WHERE TaskName LIKE '%" + name + "%'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
         Task newtask = new Task();
         if(cursor.moveToFirst()){
             do{
@@ -342,6 +354,36 @@ public class TaskActivity {
             }while(cursor.moveToNext());
         }
         return newtask;
+    }
+
+    public ArrayList<Task> getRootTasks(){
+        SQLiteDatabase db =dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + Task.TABLE + " WHERE PrevTask = NONE";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        ArrayList<Task> task_List = new ArrayList<Task>();
+
+        if(cursor.moveToFirst()){
+            do{
+                Task newtask = new Task();
+                newtask.task_ID = cursor.getInt(cursor.getColumnIndex(Task.KEY_ID));
+                newtask.name = cursor.getString(cursor.getColumnIndex(Task.Task_Name));
+                newtask.prevTask = cursor.getString(cursor.getColumnIndex(Task.Prev_Task));
+                newtask.nextTask = cursor.getString(cursor.getColumnIndex(Task.Next_Task));
+                newtask.mainTask = cursor.getString(cursor.getColumnIndex(Task.Main_Task));
+                newtask.row = cursor.getInt(cursor.getColumnIndex(Task.X));
+                newtask.column = cursor.getInt(cursor.getColumnIndex(Task.Y));
+                newtask.rank = cursor.getInt(cursor.getColumnIndex(Task.Rank));
+                newtask.level = cursor.getInt(cursor.getColumnIndex(Task.Level));
+                newtask.owner = cursor.getString(cursor.getColumnIndex(Task.Owner1));
+                newtask.status = cursor.getString(cursor.getColumnIndex(Task.Status));
+                newtask.startDate = cursor.getString(cursor.getColumnIndex(Task.StartDate1));
+                newtask.endDate = cursor.getString(cursor.getColumnIndex(Task.EndDate1));
+                newtask.comment = cursor.getString(cursor.getColumnIndex(Task.Comment));
+                task_List.add(newtask);
+
+            }while(cursor.moveToNext());
+        }
+        return task_List;
     }
 
    public ArrayList<Task> getTasksByOwnerName(String name){
