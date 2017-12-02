@@ -121,6 +121,7 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
 
                 if(task.nextTask != "NONE"){
                     TaskAct.updateNextTask(task.nextTask,task.name);
+                    // TODO: 02/12/2017 Update PrevTask of NextTask 
                 }
 
                 if(task.prevTask == "NONE") {

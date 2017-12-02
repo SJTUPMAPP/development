@@ -42,6 +42,8 @@ public class AddPersonDialogFragment extends android.support.v4.app.DialogFragme
                 EmployeeActivity EmpAct = new EmployeeActivity(getContext());
                 EditText person_name = getDialog().findViewById(R.id.person_name);
                 employee.name = person_name.getText().toString();
+                EditText title = getDialog().findViewById(R.id.person_title);
+                employee.title = title.getText().toString();
                 EditText email = getDialog().findViewById(R.id.person_email);
                 employee.email = email.getText().toString();
                 EditText phone_number = getDialog().findViewById(R.id.person_number);
