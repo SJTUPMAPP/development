@@ -48,6 +48,6 @@ public class Dashboard_ActionList extends Fragment {
         ListAdapter adapter = new SimpleAdapter(getActivity(),listems, R.layout.fragment_list_cell, new String[] { "ID","TaskName","Owner1", "Status", "Comment"},
                 new int[] {R.id.project_id, R.id.project_name,R.id.project_owner, R.id.project_status, R.id.project_comment});
         lv.setAdapter(adapter);
-        int k = 0;
+
     return rootView;}
 }

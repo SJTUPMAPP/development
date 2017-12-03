@@ -130,6 +130,7 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
                 task.owner = spinner_owner.getSelectedItem().toString();
                 task.startDate = startDatePicker.getText().toString();
                 task.endDate = endDatePicker.getText().toString();
+                if(task.prevTask == "NONE" && task.nextTask == "NONE")
                 task.startDate2 = startDatePicker2.getText().toString();
                 task.endDate2 = endDatePicker2.getText().toString();
                 task.comment = comment.getText().toString();
@@ -143,6 +144,9 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
 
                 if(task.prevTask == "NONE")
                     task.mainTask = task.name;
+                else if(task.prevTask == "NONE" && task.nextTask != "NONE")
+                    task.mainTask = TaskAct.getTaskByName(task.nextTask).mainTask;
+
                 else task.mainTask = TaskAct.getTaskByName(task.prevTask).mainTask;
                 task.level = 0;
                 TaskAct.insert(task);
@@ -152,12 +156,17 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
                     // TODO: 02/12/2017 Update PrevTask of NextTask 
                 }
 
-                if(task.prevTask == "NONE") {
+                if(task.prevTask == "NONE" && task.nextTask == "NONE" ) {
                     task.row = 1;
                     //task.column = TaskAct.findMaxColumn(task.level,task.row)+1;
                     task.column = TaskAct.findMaxColumn(task.level)+1;
                 }
 
+                else if(task.prevTask == "NONE" && task.nextTask != "NONE" ) {
+                    task.row = 1;
+                    task.column = TaskAct.findPrevColumn(task.nextTask);
+                    TaskAct.insertroot(task.level, TaskAct.findNextRow(task.nextTask), task.mainTask, task.name);
+                }
                 else {
                     task.row = TaskAct.findPrevRow(task.prevTask) + 1;
 
@@ -173,15 +182,20 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
 
                     //insert into two adjacent nodes
                     else if (TaskAct.findNextRow(task.nextTask) - TaskAct.findPrevRow(task.prevTask) == 1) {
+                        task.column = TaskAct.findPrevColumn(task.nextTask);
                         TaskAct.updatePrevTaskExisted(task.prevTask, task.name);
-                        TaskAct.LowerRow(task.level, TaskAct.findNextRow(task.nextTask), task.mainTask);
-                        task.column = TaskAct.findPrevColumn(task.prevTask);
+                        Task n = TaskAct.getTaskByName(task.nextTask);
+                        n.row = n.row + 1;
+                        TaskAct.updateRow(n);
+                        TaskAct.LowerRow(task.name);
+
                     }
 
                     //insert into two existed nodes, but not adjacent
                     else if (TaskAct.findNextRow(task.nextTask) - TaskAct.findPrevRow(task.prevTask) > 1) {
-                        TaskAct.updatePrevTaskExisted(task.prevTask, task.name);
                         task.column = TaskAct.findMaxColumn(task.level, task.row) + 1;
+                        TaskAct.updatePrevTaskExisted(task.prevTask, task.name);
+
                     }
 
                     //insert for connect two nodes with different root

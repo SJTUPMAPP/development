@@ -82,6 +82,18 @@ public class TaskActivity {
 
     }
 
+    public void updateRoot(Task task){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Task.Main_Task, task.mainTask);
+
+        // It's a good practice to use parameter ?, instead of concatenate string
+        db.update(Task.TABLE, values, Task.Task_Name + "= ?", new String[] {task.name});
+        db.close(); // Closing database connection
+
+    }
+
     public void updateLocation(Task task){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -140,9 +152,35 @@ public class TaskActivity {
     public void updatePrevTaskExisted(String prevTask, String task){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Task newtask = getTaskByName(prevTask);
+        Task newtask1 = getTaskByName(task);
+
+        ArrayList<String> nextTaskList = new ArrayList<>();
+        String nextListString = newtask.nextTask;
+        String tempListString = "";
+
         ContentValues values = new ContentValues();
-        if (Objects.equals(newtask.nextTask,new String("NONE"))) values.put(Task.Next_Task, task + "-");
-        else values.put(Task.Next_Task, newtask.nextTask + task + "-");
+
+        if (!Objects.equals(nextListString,new String("NONE"))){
+            if (nextListString.indexOf("-") == -1){
+                nextTaskList.add(nextListString);
+            }
+            else {
+                int pos = 0;
+                while (nextListString.indexOf("-",pos) != -1){
+                    int nextPos = nextListString.indexOf("-",pos);
+                    nextTaskList.add(nextListString.substring(pos,nextPos));
+                    pos = nextPos + 1;
+                }
+            }
+            for(int j = 0; j < nextTaskList.size(); j++) {
+                if(!Objects.equals(nextTaskList.get(j),newtask1.nextTask))
+                    tempListString = tempListString + nextTaskList.get(j) +"-";
+            }
+
+                values.put(Task.Next_Task, tempListString + task +  "-");
+        }
+
+        else values.put(Task.Next_Task, task + "-");
 
         // It's a good practice to use parameter ?, instead of concatenate string
         db.update(Task.TABLE, values, Task.Task_Name + "= ?", new String[] {prevTask});
@@ -251,6 +289,64 @@ public class TaskActivity {
 
             }while(cursor.moveToNext());
         }
+
+
+    }
+
+    public void LowerRow(String task){
+        Task nowtask = getTaskByName(task);
+        if(!Objects.equals(nowtask.nextTask,new String("NONE"))) {
+            Task nexttask = getTaskByName(nowtask.nextTask);
+            ArrayList<String> nextTaskList = new ArrayList<>();
+            String nextListString = nexttask.nextTask;
+
+            if (!Objects.equals(nextListString, new String("NONE"))) {
+                if (nextListString.indexOf("-") == -1) {
+                    nextTaskList.add(nextListString);
+                } else {
+                    int pos = 0;
+                    while (nextListString.indexOf("-", pos) != -1) {
+                        int nextPos = nextListString.indexOf("-", pos);
+                        nextTaskList.add(nextListString.substring(pos, nextPos));
+                        pos = nextPos + 1;
+                    }
+                }
+                for (int j = 0; j < nextTaskList.size(); j++) {
+                    Task subNextTask = getTaskByName(nextTaskList.get(j));
+                    subNextTask.row = subNextTask.row + 1;
+                    updateRow(subNextTask);
+                    LowerRow(subNextTask.name);
+                }
+            }
+        }
+
+    }
+
+    public void insertroot(int level, int row, String root, String newroot){
+        Task newtask = new Task();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String selectQuery = "SELECT * FROM " + Task.TABLE + " WHERE Level = ? AND MainTask = ? AND X >= ? ";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(level), root, String.valueOf(row)});
+        if(cursor.moveToFirst()){
+            do{
+                newtask.task_ID = cursor.getInt(cursor.getColumnIndex(Task.KEY_ID));
+                newtask =  getTaskById(newtask.task_ID);
+                newtask.row = newtask.row + 1;
+                newtask.mainTask = newroot;
+                updateRow(newtask);
+                updateRoot(newtask);
+
+            }while(cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        SQLiteDatabase db1 = dbHelper.getWritableDatabase();
+        newtask = getTaskByName(newroot);
+        ContentValues values = new ContentValues();
+        values.put(Task.Main_Task, newtask.name);
+        // It's a good practice to use parameter ?, instead of concatenate string
+        db1.update(Task.TABLE, values, Task.Task_Name + "= ?", new String[] {newtask.name});
+        db1.close();
     }
 
     public ArrayList<String> getTaskNameList(){
