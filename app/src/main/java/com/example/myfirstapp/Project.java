@@ -73,23 +73,20 @@ public class Project extends Fragment implements AddTaskDialogFragment.addTaskDi
         String name; int row, column, mId;
         ConstraintLayout conLayout = view.findViewById(R.id.fragment_project_layout);
         conLayout.removeAllViews();
+        int maxHeight = 0, maxWidth = 0;
 
-        final DrawView dv = new DrawView(getContext(),10,10,100,100);
-        dv.setMinimumWidth(500);
-        dv.setMinimumHeight(500);
-        dv.invalidate();
-        conLayout.addView(dv);
 
         for (int i = 0; i < existingTasks.size(); i++){
-            name = existingTasks.get(i).name;
-            row = existingTasks.get(i).row;
-            column = existingTasks.get(i).column;
+            final Task task = existingTasks.get(i);
+            name = task.name;
+            row = task.row;
+            column = task.column;
             Button  mButton = new Button(getContext());
             mButton.setText(name);
             mButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    DialogFragment newFragment = new AddTaskDialogFragment();
+                    DialogFragment newFragment = AddTaskDialogFragment.newInstance(task);
                     newFragment.show(getChildFragmentManager(),"dialog_fragment");
                 }
             });
@@ -98,10 +95,26 @@ public class Project extends Fragment implements AddTaskDialogFragment.addTaskDi
             conLayout.addView(mButton);
             ConstraintSet set = new ConstraintSet();
             set.clone(conLayout);
-            set.connect(mId, TOP, R.id.fragment_project_layout, TOP, height/6*row+gap*row );
-            set.connect(mId, ConstraintSet.START, R.id.fragment_project_layout, ConstraintSet.START, width/4*column+gap*column);
+            row = row - 1;
+            column = column -1;
+            int h = height/6*row+gap*row;
+            set.connect(mId, TOP, R.id.fragment_project_layout, TOP, h );
+            if (h > maxHeight) {
+                maxHeight = h;
+            }
+            int w = width/4*column+gap*column;
+            set.connect(mId, ConstraintSet.START, R.id.fragment_project_layout, ConstraintSet.START, w);
+            if (w > maxWidth) {
+                maxWidth = w;
+            }
             set.applyTo(conLayout);
         }
+
+        final DrawView dv = new DrawView(getContext(),width,height);
+        dv.invalidate();
+        dv.setMinimumHeight(maxHeight + 100);
+        dv.setMinimumWidth(maxWidth + 500);
+        conLayout.addView(dv);
     }
 
 }

@@ -56,7 +56,6 @@ public class homepage extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-//        viewPager.addOnPageChangeListener(maddOnPageChangeListener);
         setupViewPager(viewPager);
     }
 }

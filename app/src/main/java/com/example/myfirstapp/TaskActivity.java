@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Created by User on 2017/10/4.
@@ -140,8 +141,8 @@ public class TaskActivity {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Task newtask = getTaskByName(prevTask);
         ContentValues values = new ContentValues();
-
-        values.put(Task.Next_Task, newtask.nextTask + task + "-");
+        if (Objects.equals(newtask.nextTask,new String("NONE"))) values.put(Task.Next_Task, task + "-");
+        else values.put(Task.Next_Task, newtask.nextTask + task + "-");
 
         // It's a good practice to use parameter ?, instead of concatenate string
         db.update(Task.TABLE, values, Task.Task_Name + "= ?", new String[] {prevTask});
@@ -362,7 +363,7 @@ public class TaskActivity {
 
     public ArrayList<Task> getRootTasks(){
         SQLiteDatabase db =dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT * FROM " + Task.TABLE + " WHERE PrevTask = NONE";
+        String selectQuery = "SELECT * FROM " + Task.TABLE + " WHERE PrevTask = 'NONE'";
         Cursor cursor = db.rawQuery(selectQuery, null);
         ArrayList<Task> task_List = new ArrayList<Task>();
 

@@ -101,11 +101,11 @@ public class Organization extends Fragment implements AddPersonDialogFragment.ad
 
         for (int i = 0; i < employeeList.size(); i++){
             name = existingEmployees.get(i).name;
-            //title = existingEmployees.get(i).title;
-            // phone = existingEmployees.get(i).phone;
+            title = existingEmployees.get(i).title;
+             phone = existingEmployees.get(i).phone;
 
-            title = String.valueOf(width);
-            phone = String.valueOf(height);
+//            ／／title = String.valueOf(width);
+//            phone = String.valueOf(height);
             column = i%2+1;
             row = i/2+1;
 

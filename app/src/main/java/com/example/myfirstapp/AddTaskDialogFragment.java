@@ -39,16 +39,29 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
     private ArrayAdapter<String> prevtask_arr_adapter;
     private ArrayAdapter<String> nexttask_arr_adapter;
 
+    public AddTaskDialogFragment(){
+
+    }
+
+    public static AddTaskDialogFragment newInstance(Task task){
+        AddTaskDialogFragment fragment = new AddTaskDialogFragment();
+        Bundle args = new Bundle();
+        args.putString("name",task.name);
+        args.putInt("taskID",task.task_ID);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
+        super.onCreate(savedInstanceState);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_add, null);
         builder.setView(view);
-
         TaskActivity Tact = new TaskActivity(getContext());
+        spinner_owner = view.findViewById(R.id.spinner_owner);
 
         //        Date picker settings
         startDatePicker = view.findViewById(R.id.btn_start_date);
@@ -65,13 +78,9 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
             }
         });
 
-
-        spinner_owner = view.findViewById(R.id.spinner_owner);
         spinner_prevtask = view.findViewById(R.id.spinner_prevtask);
         spinner_nexttask = view.findViewById(R.id.spinner_nexttask);
 
-        //数据
-        // TODO: 29/11/2017 set default choice to "None" 
         prevtask_data_list = new ArrayList<String>();
         prevtask_data_list = Tact.getTaskNameList();
         prevtask_data_list.add(0,"NONE");
@@ -97,6 +106,26 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
         spinner_owner.setAdapter(owner_arr_adapter);
         spinner_prevtask.setAdapter(prevtask_arr_adapter);
         spinner_nexttask.setAdapter(nexttask_arr_adapter);
+
+
+        if (getArguments() != null){
+            String name = getArguments().getString("name");
+            EditText nameField = view.findViewById(R.id.project_name);
+            nameField.setText(name);
+            int id = getArguments().getInt("taskID");
+            Task task = Tact.getTaskById(id);
+            int pos = owner_arr_adapter.getPosition(task.owner);
+            spinner_owner.setSelection(pos);
+
+            pos = prevtask_arr_adapter.getPosition(task.prevTask);
+            spinner_prevtask.setSelection(pos);
+            
+            pos = nexttask_arr_adapter.getPosition(task.nextTask);
+            spinner_nexttask.setSelection(pos);
+            startDatePicker.setText(task.startDate);
+            endDatePicker.setText(task.endDate);
+        }
+
 
         builder.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
             @Override
@@ -136,7 +165,7 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
 
                     //insert as the last node
                     if (task.nextTask == "NONE") {
-                        TaskAct.updatePrevTask(task.prevTask, task.name);
+                        TaskAct.updatePrevTaskExisted(task.prevTask, task.name);
                         int maxColumn = TaskAct.findMaxColumn(task.level, task.row) + 1;
                         if (maxColumn < TaskAct.findPrevColumn(task.prevTask))
                             maxColumn = TaskAct.findPrevColumn(task.prevTask);
@@ -145,7 +174,7 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
 
                     //insert into two adjacent nodes
                     else if (TaskAct.findNextRow(task.nextTask) - TaskAct.findPrevRow(task.prevTask) == 1) {
-                        TaskAct.updatePrevTask(task.prevTask, task.name);
+                        TaskAct.updatePrevTaskExisted(task.prevTask, task.name);
                         TaskAct.LowerRow(task.level, TaskAct.findNextRow(task.nextTask), task.mainTask);
                         task.column = TaskAct.findPrevColumn(task.prevTask);
                     }

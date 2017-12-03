@@ -1,16 +1,14 @@
 package com.example.myfirstapp;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.LinearGradient;
 import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.RectF;
-import android.graphics.Shader;
 import android.view.View;
+
+import java.util.ArrayList;
+import java.util.Objects;
+
 
 /**
  * Created by elvischen on 19/10/2017.
@@ -18,14 +16,66 @@ import android.view.View;
 
 
 public class DrawView extends View {
-    private int x1,x2,y1,y2;
+    private int width, height, gap;
+    Paint p = new Paint();
 
-    public DrawView(Context context,int startx, int starty, int endx, int endy) {
+    public DrawView(Context context,int wid, int heig) {
         super(context);
-        x1 = startx;
-        x2 = endx;
-        y1 = starty;
-        y2 = endy;
+        width = wid;
+        height = heig;
+        gap = width/10;
+
+    }
+
+    public void drawToNext(Task task, Canvas canvas, TaskActivity Tact){
+        ArrayList<String> nextTaskList = new ArrayList<>();
+        String nextListString = task.nextTask.toString();
+        if (!Objects.equals(nextListString,new String("NONE"))){
+            if (nextListString.indexOf("-") == -1){
+                nextTaskList.add(nextListString);
+            }
+            else {
+                int pos = 0;
+                while (nextListString.indexOf("-",pos) != -1){
+                    int nextPos = nextListString.indexOf("-",pos);
+                    nextTaskList.add(nextListString.substring(pos,nextPos));
+                    pos = nextPos + 1;
+                }
+            }
+            for(int j = 0; j < nextTaskList.size(); j++){
+                Task nextTask = Tact.getTaskByName(nextTaskList.get(j));
+                int row = task.row -1;
+                int column = task.column - 1;
+                int x1 = width/4*column+gap*column + 120;
+                int y1= height/6*row+gap*row + 50;
+                int nextrow = nextTask.row -1;
+                int nextcolumn = nextTask.column - 1;
+                int x2 = width/4*nextcolumn+gap*nextcolumn + 120;
+                int y2= height/6*nextrow+gap*nextrow + 50;
+                canvas.drawLine(x1,y1,x2,y2,p);
+                int midx = (x1 + x2)/2;
+                int midy = (y1 + y2)/2;
+                float xRight = 0,yRight = 0,xLeft = 0,yLeft = 0;
+
+                    double sin = (x2-x1)/Math.hypot(x2-x1,y2-y1);
+                    double cos = (y2-y1)/Math.hypot(x2-x1,y2-y1);
+                    double cos1 = Math.sqrt(2)/2*(cos-sin);
+                    double sin1 = Math.sqrt(2)/2*(sin+cos);
+                    double cos2 = -sin1;
+                    double sin2 = cos1;
+                    xRight = (float)(midx+30*cos1);
+                    yRight = (float)(midy-30*sin1);
+                    xLeft = (float)(midx+30*cos2);
+                    yLeft = (float)(midy-30*sin2);
+
+                canvas.drawLine(midx,midy,xRight,yRight,p);
+                canvas.drawLine(midx,midy,xLeft,yLeft,p);
+                drawToNext(nextTask,canvas,Tact);
+            }
+        }
+        else {
+            return;
+        }
     }
 
     @Override
@@ -36,8 +86,16 @@ public class DrawView extends View {
          * drawLine 绘制直线 drawPoin 绘制点
          */
         // 创建画笔
-        Paint p = new Paint();
-        p.setColor(Color.RED);// 设置红色
+
+        p.setColor(Color.BLACK);// 设置红色
+        p.setStrokeWidth(3);
+        TaskActivity Tact = new TaskActivity(getContext());
+        ArrayList<Task> list = Tact.getRootTasks();
+        for (int i = 0; i < list.size(); i++) {
+            Task task = list.get(i);
+            drawToNext(task,canvas,Tact);
+        }
+
 
 //        canvas.drawText("画圆：", 10, 20, p);// 画文本
 //        canvas.drawCircle(500, 20, 10, p);// 小圆
@@ -46,7 +104,6 @@ public class DrawView extends View {
 //
 //        canvas.drawText("画线及弧线：", 10, 60, p);
 //        p.setColor(Color.GREEN);// 设置绿
-        canvas.drawLine(x1,y1,x2,y2,p);
 //        canvas.drawLine(x2,y2,x2+20,y2-20,p);
 //        canvas.drawLine(x2,y2,x2-20,y2-20,p);
 //        canvas.drawLine(110, 40, 190, 80, p);// 斜线
