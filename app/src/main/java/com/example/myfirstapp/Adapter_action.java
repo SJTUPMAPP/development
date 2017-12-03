@@ -1,22 +1,15 @@
 package com.example.myfirstapp;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.view.View;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+
 import java.util.List;
 import java.util.Map;
 
@@ -70,7 +63,7 @@ public class Adapter_action extends BaseAdapter{
         mHolder.tv2.setText(mlistems.get(position).get("TaskName").toString());
         mHolder.tv3.setText(mlistems.get(position).get("Owner1").toString());
         mHolder.btn.setText(mlistems.get(position).get("Status").toString());
-        //mHolder.et1.setText(mlistems.get(position).get("Comment").toString());
+        mHolder.et1.setText(mlistems.get(position).get("Comment").toString());
         //头像的点击事件并传值
         mHolder.btn.setOnClickListener(new View.OnClickListener() {
             @Override

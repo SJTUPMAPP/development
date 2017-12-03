@@ -19,10 +19,10 @@ public class Dashboard_ViewPagerAdapter extends FragmentPagerAdapter {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
         switch (position){
-            case 0:
-                return Dashboard_ActionList.newInstance(0);
             case 1:
-                return Dashboard_Timeline.newInstance(1);
+                return Dashboard_ActionList.newInstance(1);
+            case 0:
+                return Dashboard_Timeline.newInstance(0);
             //case 2:
                 //return Dashboard_Timeline.newInstance(2);
         }
@@ -37,9 +37,9 @@ public class Dashboard_ViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position) {
-            case 0:
-                return "Action List";
             case 1:
+                return "Action List";
+            case 0:
                 return "Weekday";
             //case 2:
                 //return "本月";

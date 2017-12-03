@@ -62,7 +62,7 @@ public class Dashboard_Timeline extends Fragment {
         for (int i = 0; i < cnt; i++){
             HashMap<String, Object> map = new HashMap<>();
             map.put("ItemTitle", tasklist.get(i).name);
-            map.put("ItemText", tasklist.get(i).owner);
+            map.put("ItemText", "Status: "+ tasklist.get(i).status + "   Completion: "+ String.valueOf(tasklist.get(i).percentage)+"%");
             listItem.add(map);
         }
     }

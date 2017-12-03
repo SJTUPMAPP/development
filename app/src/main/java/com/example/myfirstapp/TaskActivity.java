@@ -24,9 +24,9 @@ public class TaskActivity {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String insertQuery = "INSERT INTO " + Task.TABLE
                 + " (" +Task.Task_Name +"," + Task.Owner1 +","+ Task.CreateTime + "," + Task.StartDate1 +"," +Task.EndDate1+ "," +Task.Prev_Task
-                +"," + Task.Next_Task + "," + Task.Main_Task + "," + Task.Level +  "," +Task.Status + "," + Task.Percentage + ") VALUES ('"
+                +"," + Task.Next_Task + "," + Task.Main_Task + "," + Task.Level +  "," +Task.Status + "," + Task.Percentage + ","+ Task.Comment+ ") VALUES ('"
                 + newtask.name + "','"+ newtask.owner + "', datetime('now', 'localtime'), '"+ newtask.startDate +"','"+ newtask.endDate +"','"+ newtask.prevTask +"', '"
-                + newtask.nextTask +"', '"+ newtask.mainTask+"',"+ newtask.level +", 'ON', 0)";
+                + newtask.nextTask +"', '"+ newtask.mainTask+"',"+ newtask.level +",'" + newtask.status +"'," + newtask.percentage +",'" + newtask.comment +"')";
 
         //Inserting Row
         db.execSQL(insertQuery);
@@ -550,7 +550,8 @@ public class TaskActivity {
         SQLiteDatabase db =dbHelper.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + Task.TABLE +
                 " WHERE DATE(EndDate1) >= DATE('now', 'localtime','-1 day') " +
-                "AND DATE(EndDate1) < DATE('now','localtime','+7 day') ";
+                "AND DATE(EndDate1) < DATE('now','localtime','+7 day') " +
+                "ORDER BY DATE(EndDate1) ASC";
         Cursor cursor = db.rawQuery(selectQuery, null);
         ArrayList<Task> task_List = new ArrayList<Task>();
 

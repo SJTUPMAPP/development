@@ -21,7 +21,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/imageView"
         android:layout_marginTop="100dp"
-        android:text="我的资料" />
+        android:text="Profile" />
 
     <Button
         android:id="@+id/my_file"
@@ -30,7 +30,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/my_data"
         android:layout_marginTop="30dp"
-        android:text="我的文件" />
+        android:text="File" />
 
     <Button
         android:id="@+id/log_out"
@@ -39,6 +39,6 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/my_file"
         android:layout_marginTop="30dp"
-        android:text="注销" />
+        android:text="Logout" />
 
 </RelativeLayout>
