@@ -100,6 +100,7 @@ public class Organization extends Fragment implements AddPersonDialogFragment.ad
 //        conLayout.addView(dv);
 
         for (int i = 0; i < employeeList.size(); i++){
+            final Employee emp = existingEmployees.get(i);
             name = existingEmployees.get(i).name;
             title = existingEmployees.get(i).title;
              phone = existingEmployees.get(i).phone;
@@ -118,7 +119,7 @@ public class Organization extends Fragment implements AddPersonDialogFragment.ad
             mButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    DialogFragment newFragment = new AddTaskDialogFragment();
+                    DialogFragment newFragment = ViewPersonDialogFragment.newInstance(emp.empolyee_ID);
                     newFragment.show(getChildFragmentManager(),"dialog_fragment");
                 }
             });

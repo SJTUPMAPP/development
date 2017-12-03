@@ -28,4 +28,10 @@
     <string name="person_Number">Phone Number</string>
     <string name="text_department">Department</string>
     <string name="text_team">Team</string>
+    <string name="spinner_start_date2">Actual Start Date</string>
+    <string name="spinner_end_date2">Actual End Date</string>
+    <string name="status">Status</string>
+    <string name="project_comment">Comment</string>
+    <string name="percentage">%</string>
+    <string name="completion">Completion</string>
 </resources>

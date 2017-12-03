@@ -36,8 +36,6 @@ public class Task {
 
 
 
-
-
     // property help us to keep data
     public int task_ID;
     public String name;
@@ -46,7 +44,9 @@ public class Task {
     public String prevTask;
     public String nextTask;
     public String startDate;
+    public String startDate2;
     public String endDate;
+    public String endDate2;
     public int row;
     public int column;
     public int level;

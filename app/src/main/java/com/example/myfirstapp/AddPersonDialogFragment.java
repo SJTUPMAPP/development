@@ -21,10 +21,8 @@ public class AddPersonDialogFragment extends android.support.v4.app.DialogFragme
     AddPersonDialogFragment.addPersonDialogListener mListener;
 
     private Spinner spinner_department;
-    private List<String> department_data_list;
 
     private Spinner spinner_team;
-    private List<String> team_data_list;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

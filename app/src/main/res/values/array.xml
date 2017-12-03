@@ -21,4 +21,19 @@
         <item>3</item>
         <item>4</item>
     </string-array>
+
+    <string-array name="status">
+        <item>On</item>
+        <item>Off</item>
+        <item>Delay</item>
+    </string-array>
+
+    <string-array name="owner">
+        <item>Elvis</item>
+        <item>Timmy</item>
+        <item>Marx</item>
+        <item>Jason</item>
+    </string-array>
+
+
 </resources>
