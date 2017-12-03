@@ -17,6 +17,7 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by elvischen on 04/10/2017.
@@ -24,8 +25,6 @@ import java.util.List;
 public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment {
     addTaskDialogListener mListener;
 //    EditText project_name = findView
-    Button startDatePicker;
-    Button endDatePicker;
 
     private int mYear, mMonth, mDay;
 
@@ -38,18 +37,13 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
     private ArrayAdapter<String> owner_arr_adapter;
     private ArrayAdapter<String> prevtask_arr_adapter;
     private ArrayAdapter<String> nexttask_arr_adapter;
+    private Spinner status;
+
+    private Button startDatePicker, endDatePicker, startDatePicker2, endDatePicker2;
+    private EditText comment,project_name,percentage;
 
     public AddTaskDialogFragment(){
 
-    }
-
-    public static AddTaskDialogFragment newInstance(Task task){
-        AddTaskDialogFragment fragment = new AddTaskDialogFragment();
-        Bundle args = new Bundle();
-        args.putString("name",task.name);
-        args.putInt("taskID",task.task_ID);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -58,10 +52,17 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
         super.onCreate(savedInstanceState);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_add, null);
+        final View view = inflater.inflate(R.layout.dialog_add, null);
         builder.setView(view);
         TaskActivity Tact = new TaskActivity(getContext());
+
+        project_name = view.findViewById(R.id.project_name);
         spinner_owner = view.findViewById(R.id.spinner_owner);
+        comment = view.findViewById(R.id.project_comment);
+        spinner_prevtask = view.findViewById(R.id.spinner_prevtask);
+        spinner_nexttask = view.findViewById(R.id.spinner_nexttask);
+        percentage = view.findViewById(R.id.project_percentage);
+        status = view.findViewById(R.id.spinner_status);
 
         //        Date picker settings
         startDatePicker = view.findViewById(R.id.btn_start_date);
@@ -78,8 +79,19 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
             }
         });
 
-        spinner_prevtask = view.findViewById(R.id.spinner_prevtask);
-        spinner_nexttask = view.findViewById(R.id.spinner_nexttask);
+        startDatePicker2 = view.findViewById(R.id.btn_start_date2);
+        endDatePicker2 = view.findViewById(R.id.btn_end_date2);
+        startDatePicker2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                showDatePicker(v);
+            }
+        });
+        endDatePicker2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                showDatePicker(v);
+            }
+        });
+
 
         prevtask_data_list = new ArrayList<String>();
         prevtask_data_list = Tact.getTaskNameList();
@@ -88,11 +100,10 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
         nexttask_data_list = Tact.getTaskNameList();
         nexttask_data_list.add(0,"NONE");
 
-        owner_data_list = new ArrayList<String>();
-        owner_data_list.add("Elvis");
-        owner_data_list.add("Timmy");
-        owner_data_list.add("Marx");
-        owner_data_list.add("Jason");
+        EmployeeActivity Eact = new EmployeeActivity(getContext());
+        owner_data_list = Eact.getEmployeeNameList();
+        owner_data_list.add(0,"NONE");
+
 
         //适配器
         owner_arr_adapter= new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, owner_data_list);
@@ -108,40 +119,28 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
         spinner_nexttask.setAdapter(nexttask_arr_adapter);
 
 
-        if (getArguments() != null){
-            String name = getArguments().getString("name");
-            EditText nameField = view.findViewById(R.id.project_name);
-            nameField.setText(name);
-            int id = getArguments().getInt("taskID");
-            Task task = Tact.getTaskById(id);
-            int pos = owner_arr_adapter.getPosition(task.owner);
-            spinner_owner.setSelection(pos);
-
-            pos = prevtask_arr_adapter.getPosition(task.prevTask);
-            spinner_prevtask.setSelection(pos);
-            
-            pos = nexttask_arr_adapter.getPosition(task.nextTask);
-            spinner_nexttask.setSelection(pos);
-            startDatePicker.setText(task.startDate);
-            endDatePicker.setText(task.endDate);
-        }
-
-
         builder.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 Task task = new Task();
                 TaskActivity TaskAct = new TaskActivity(getContext());
-                EditText project_name = getDialog().findViewById(R.id.project_name);
                 task.name = project_name.getText().toString();
-                spinner_prevtask = getDialog().findViewById(R.id.spinner_prevtask);
-                task.prevTask = (String)spinner_prevtask.getSelectedItem();
-                spinner_nexttask = getDialog().findViewById(R.id.spinner_nexttask);
-                task.nextTask = (String)spinner_nexttask.getSelectedItem();
-                spinner_owner = getDialog().findViewById(R.id.spinner_owner);
-                task.owner = (String)spinner_owner.getSelectedItem();
+                task.prevTask = spinner_prevtask.getSelectedItem().toString();
+                task.nextTask = spinner_nexttask.getSelectedItem().toString();
+                task.owner = spinner_owner.getSelectedItem().toString();
                 task.startDate = startDatePicker.getText().toString();
                 task.endDate = endDatePicker.getText().toString();
+                task.startDate2 = startDatePicker2.getText().toString();
+                task.endDate2 = endDatePicker2.getText().toString();
+                task.comment = comment.getText().toString();
+                task.status = status.getSelectedItem().toString();
+                if (Objects.equals(percentage.getText().toString(),new String(""))){
+                    task.percentage = 0;
+                }
+                else {
+                    task.percentage = Integer.parseInt(percentage.getText().toString());
+                }
+
                 if(task.prevTask == "NONE")
                     task.mainTask = task.name;
                 else task.mainTask = TaskAct.getTaskByName(task.prevTask).mainTask;
@@ -221,14 +220,22 @@ public class AddTaskDialogFragment extends android.support.v4.app.DialogFragment
                         @Override
                         public void onDateSet(DatePicker view, int year,
                                               int monthOfYear, int dayOfMonth) {
-
-                            if (v.getId() == R.id.btn_start_date) {
-                                startDatePicker.setText(year+ "-" + String.format("%02d",(monthOfYear + 1)) + "-" + String.format("%02d",dayOfMonth));
+                            switch (v.getId()){
+                                case R.id.btn_start_date:
+                                    startDatePicker.setText(year+ "-" + String.format("%02d",(monthOfYear + 1)) + "-" + String.format("%02d",dayOfMonth));
+                                    startDatePicker2.setText(year+ "-" + String.format("%02d",(monthOfYear + 1)) + "-" + String.format("%02d",dayOfMonth));
+                                    break;
+                                case R.id.btn_end_date:
+                                    endDatePicker.setText(year+ "-" + String.format("%02d",(monthOfYear + 1)) + "-" + String.format("%02d",dayOfMonth));
+                                    endDatePicker2.setText(year+ "-" + String.format("%02d",(monthOfYear + 1)) + "-" + String.format("%02d",dayOfMonth));
+                                    break;
+                                case R.id.btn_start_date2:
+                                    startDatePicker2.setText(year+ "-" + String.format("%02d",(monthOfYear + 1)) + "-" + String.format("%02d",dayOfMonth));
+                                    break;
+                                case R.id.btn_end_date2:
+                                    endDatePicker2.setText(year+ "-" + String.format("%02d",(monthOfYear + 1)) + "-" + String.format("%02d",dayOfMonth));
+                                    break;
                             }
-                            else {
-                                endDatePicker.setText(year+ "-" + String.format("%02d",(monthOfYear + 1)) + "-" + String.format("%02d",dayOfMonth));
-                            }
-
 
                         }
                     }, mYear, mMonth, mDay);

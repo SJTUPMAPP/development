@@ -86,7 +86,8 @@ public class Project extends Fragment implements AddTaskDialogFragment.addTaskDi
             mButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    DialogFragment newFragment = AddTaskDialogFragment.newInstance(task);
+//                    DialogFragment newFragment = AddTaskDialogFragment.newInstance(task);
+                    ViewEditTaskDialogFragment newFragment = ViewEditTaskDialogFragment.newInstance(task);
                     newFragment.show(getChildFragmentManager(),"dialog_fragment");
                 }
             });

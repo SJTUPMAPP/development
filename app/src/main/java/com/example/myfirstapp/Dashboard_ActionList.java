@@ -49,53 +49,5 @@ public class Dashboard_ActionList extends Fragment {
                 new int[] {R.id.project_id, R.id.project_name,R.id.project_owner, R.id.project_status, R.id.project_comment});
         lv.setAdapter(adapter);
         int k = 0;
-//        lv.setAdapter(new BaseAdapter() {
-//            @Override
-//            public int getCount() {
-//                return tasklist.size();
-//            }
-//            //View view = View.inflate(getContext(),R.layout.fragment_list_cell,null);
-//            //ListView的每一个条目都是一个view对象
-//            @Override
-//            public View getView(int position, View convertView, ViewGroup parent) {
-//                task = tasklist.get(position);
-//                View view;
-//                //从studentlist中取出一行数据，position相当于数组下标,可以实现逐行取数据
-//                if(convertView==null){
-//                    view = View.inflate(getContext(),R.layout.fragment_list_cell,null);
-//                }
-//                else{
-//                    view = convertView;
-//                }
-//                //view = View.inflate(getContext(),R.layout.fragment_list_cell,null);
-//                TextView project_id = (TextView) view.findViewById(R.id.project_id);
-//                TextView project_name = (TextView) view.findViewById(R.id.project_name);
-//                TextView project_owner = (TextView) view.findViewById(R.id.project_owner);
-//                Button project_status = (Button) view.findViewById(R.id.project_status);
-//                Button project_comment = (Button) view.findViewById(R.id.project_comment);
-//                project_id.setText(Integer.toString(task.task_ID));
-//                project_name.setText(task.name);
-//                project_owner.setText(task.owner);
-//                project_status.setText(task.status);
-//                project_comment.setText(task.comment);
-////                project_id.setText(Integer.toString(1));
-////                project_name.setText("a");
-////                project_owner.setText("a");
-////                project_status.setText("a");
-////                project_comment.setText("a");
-//                return view;
-//            }
-//
-//            @Override
-//            public Object getItem(int position) {
-//                return null;
-//            }
-//
-//            @Override
-//            public long getItemId(int position) {
-//                return 0;
-//            }
-//
-//        });
     return rootView;}
 }
