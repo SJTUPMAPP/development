@@ -23,15 +23,15 @@ public class Dashboard_ViewPagerAdapter extends FragmentPagerAdapter {
                 return Dashboard_ActionList.newInstance(0);
             case 1:
                 return Dashboard_Timeline.newInstance(1);
-            case 2:
-                return Dashboard_Timeline.newInstance(2);
+            //case 2:
+                //return Dashboard_Timeline.newInstance(2);
         }
         return null;
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 
     @Override
@@ -40,9 +40,9 @@ public class Dashboard_ViewPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return "Action List";
             case 1:
-                return "本周";
-            case 2:
-                return "本月";
+                return "Weekday";
+            //case 2:
+                //return "本月";
         }
         return null;
     }

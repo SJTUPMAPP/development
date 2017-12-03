@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">My First App</string>
+    <string name="app_name">EasyMana</string>
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Send</string>
     <string name="button_done">Done</string>
-    <string name="title_activity_homepage">homepage</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_activity_homepage">EasyMana</string>
+    <string name="title_home">Action</string>
+    <string name="title_dashboard">Workflow</string>
     <string name="title_organization">Organization</string>
-    <string name="title_profiles">Profiles</string>
+    <string name="title_profiles">Setting</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
