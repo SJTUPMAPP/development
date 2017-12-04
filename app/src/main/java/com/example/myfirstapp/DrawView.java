@@ -25,6 +25,7 @@ public class DrawView extends View {
         height = heig;
         gap = width/10;
 
+
     }
 
     public void drawToNext(Task task, Canvas canvas, TaskActivity Tact){
@@ -46,12 +47,12 @@ public class DrawView extends View {
                 Task nextTask = Tact.getTaskByName(nextTaskList.get(j));
                 int row = task.row -1;
                 int column = task.column - 1;
-                int x1 = width/4*column+gap*column + 120;
-                int y1= height/6*row+gap*row + 50;
+                int x1 = width/3*column+gap*column + 180;
+                int y1= height/6 *row+gap*row + 100;
                 int nextrow = nextTask.row -1;
                 int nextcolumn = nextTask.column - 1;
-                int x2 = width/4*nextcolumn+gap*nextcolumn + 120;
-                int y2= height/6*nextrow+gap*nextrow + 50;
+                int x2 = width/3*nextcolumn+gap*nextcolumn + 180;
+                int y2= height/6*nextrow+gap*nextrow + 100;
                 canvas.drawLine(x1,y1,x2,y2,p);
                 int midx = (x1 + x2)/2;
                 int midy = (y1 + y2)/2;

@@ -125,24 +125,29 @@ public class EmployeeActivity {
 
     public Employee getEmployeeById(int Id){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT " +
-                Employee.KEY_ID + "," +
-                Employee.Employee_Name +
-                " FROM " + Employee.TABLE +
+        String selectQuery = "SELECT * FROM " + Employee.TABLE +
                 " WHERE " + Employee.KEY_ID + "=?";
-        Employee person = new Employee();
+        Employee newemployee = new Employee();
         Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(Id)});
 
         if(cursor.moveToFirst()){
             do{
-                person.empolyee_ID =cursor.getInt(cursor.getColumnIndex(Employee.KEY_ID));
-                person.name =cursor.getString(cursor.getColumnIndex(Employee.Employee_Name));
+                newemployee.empolyee_ID = cursor.getInt(cursor.getColumnIndex(Employee.KEY_ID));
+                newemployee.name = cursor.getString(cursor.getColumnIndex(Employee.Employee_Name));
+                newemployee.phone = cursor.getString(cursor.getColumnIndex(Employee.Phone));
+                newemployee.title = cursor.getString(cursor.getColumnIndex(Employee.Title));
+                newemployee.email = cursor.getString(cursor.getColumnIndex(Employee.Email));
+                newemployee.department = cursor.getString(cursor.getColumnIndex(Employee.Department));
+                newemployee.team = cursor.getString(cursor.getColumnIndex(Employee.Team));
+
+
+
 
             } while (cursor.moveToNext());
         }
         cursor.close();
         db.close();
-        return person;
+        return newemployee;
 
     }
 

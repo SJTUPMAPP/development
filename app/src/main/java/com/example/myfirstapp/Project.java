@@ -82,6 +82,10 @@ public class Project extends Fragment implements AddTaskDialogFragment.addTaskDi
             row = task.row;
             column = task.column;
             Button  mButton = new Button(getContext());
+            mButton.setWidth(width/3);
+            mButton.setHeight(height/12);
+            //mButton.setAutoSizeTextTypeWithDefaults(mButton.AUTO_SIZE_TEXT_TYPE_UNIFORM);
+            mButton.setAutoSizeTextTypeUniformWithConfiguration(6, 15, 1, 1);
             mButton.setText(name);
             mButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -93,6 +97,7 @@ public class Project extends Fragment implements AddTaskDialogFragment.addTaskDi
             });
             mId = conLayout.generateViewId();
             mButton.setId(mId);
+
             conLayout.addView(mButton);
             ConstraintSet set = new ConstraintSet();
             set.clone(conLayout);

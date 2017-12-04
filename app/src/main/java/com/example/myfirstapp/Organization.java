@@ -113,9 +113,10 @@ public class Organization extends Fragment implements AddPersonDialogFragment.ad
             Button  mButton = new Button(getContext());
             mButton.setWidth(7*width/20);
             mButton.setHeight(height/8);
-            mButton.setText(name+"\n"+title+"\n"+phone);
+
             //mButton.setAutoSizeTextTypeWithDefaults(mButton.AUTO_SIZE_TEXT_TYPE_UNIFORM);
             mButton.setAutoSizeTextTypeUniformWithConfiguration(6, 15, 1, 1);
+            mButton.setText(name+"\n"+title+"\n"+phone);
             mButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

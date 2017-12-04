@@ -44,17 +44,17 @@ public class ViewPersonDialogFragment extends android.support.v4.app.DialogFragm
         Employee employee = Eact.getEmployeeById(employeeID);
         String employeeName = employee.name;
         TextView nameView = view.findViewById(R.id.person_name);
-        nameView.setText(employeeName);
+        nameView.setText("Name: "+ employeeName);
         TextView titleView = view.findViewById(R.id.person_title);
-        titleView.setText(employee.title);
+        titleView.setText("Title: "+employee.title);
         TextView emailView = view.findViewById(R.id.person_email);
-        emailView.setText(employee.email);
+        emailView.setText("Email: "+employee.email);
         TextView numberView = view.findViewById(R.id.person_number);
-        numberView.setText(employee.mobile);
+        numberView.setText("Mobile: "+employee.phone);
         TextView departmentView = view.findViewById(R.id.view_department);
-        departmentView.setText(employee.department);
+        departmentView.setText("Department: "+employee.department);
         TextView teamView = view.findViewById(R.id.view_team);
-        teamView.setText(employee.team);
+        teamView.setText("Team: "+employee.team);
         ArrayList<Task> tasklist = Tact.getTasksByOwnerName(employeeName);
         List<Map<String, Object>> listems = new ArrayList<Map<String, Object>>();
         for (int i = 0; i < tasklist.size(); i++) {
